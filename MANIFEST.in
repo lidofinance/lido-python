@@ -1,0 +1,2 @@
+include contracts/abi/goerli/*.json
+include contracts/abi/mainnet/*.json
