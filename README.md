@@ -31,6 +31,8 @@ Depending on the supplied WEB3_PROVIDER_URI, a correct network will be used. Eve
 - validate_keys_multi(operator_data) -> operator_data - validates keys in multiple processes and adds validation results to operator_data
 - find_duplicates(operator_data) -> operator_data - finds duplicate keys and adds results to operator_data
 
+- get_stats() -> stats - fetches various constants from Lido contract, but you can even pass a list of functions to fetch eg get_stats([isStopped])
+
 You can mix and match these functions, but make sure to use get_operators_data() first.
 
 ## How to Use

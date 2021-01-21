@@ -4,6 +4,7 @@ from lido import (
     get_operators_keys,
     validate_keys_multi,
     find_duplicates,
+    get_stats,
 )
 
 
@@ -28,6 +29,11 @@ def main():
 
     print("finished script for", len(operators_with_checked_duplicates), "ops")
     print("TOTAL EXECUTION TIME", time.time() - start_time)
+
+    start_time5 = time.time()
+    stats = get_stats()
+    print("fetched stats", time.time() - start_time5)
+    print(stats)
 
 
 if __name__ == "__main__":
