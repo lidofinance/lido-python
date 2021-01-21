@@ -42,3 +42,14 @@ Use a RPC provider url as an environment variable and run your script:
 `WEB3_PROVIDER_URI=https://eth-mainnet.provider.xx example.py`
 
 See `example.py` for a complete example.
+
+## Options
+
+If you are testing a new deployment of Lido, these environment variables can override addresses and ABIs:
+
+- lido_address
+- node_operators_address
+- lido_abi
+- node_operators_abi
+
+`WEB3_PROVIDER_URI=https://eth-mainnet.provider.xx lido_address=XXX node_operators_address=XXX lido_abi=xxx.json node_operators_abi=xxx.json example.py`

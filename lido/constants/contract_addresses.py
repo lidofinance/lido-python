@@ -1,3 +1,5 @@
+import os
+
 from web3.auto import w3
 from lido.constants.chains import chains
 
@@ -14,11 +16,23 @@ NODE_OPS_ADDRESSES = {
 
 def get_lido_address():
     """Return an appropriate Lido address for current network"""
+
+    env = os.getenv("lido_address")
+
+    if env is not None:
+        return env
+
     chain = w3.eth.chainId
     return LIDO_ADDRESSES[chains[chain]]
 
 
 def get_node_operators_address():
     """Return an appropriate Node Operator address for current network"""
+
+    env = os.getenv("node_operators_address")
+
+    if env is not None:
+        return env
+
     chain = w3.eth.chainId
     return NODE_OPS_ADDRESSES[chains[chain]]
