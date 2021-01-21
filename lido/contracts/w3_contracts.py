@@ -1,9 +1,9 @@
 from web3.auto import w3
-from lido_network_helpers.constants.contract_addresses import (
+from lido.constants.contract_addresses import (
     get_lido_address,
     get_node_operators_address,
 )
-from lido_network_helpers.contracts.abi_loader import load_lido_abi, load_operators_abi
+from lido.contracts.abi_loader import load_lido_abi, load_operators_abi
 
 
 def get_lido_contract():

@@ -1,12 +1,12 @@
 from py_ecc.bls import G2ProofOfPossession as bls
-from lido_network_helpers.eth2deposit.utils.ssz import (
+from lido.eth2deposit.utils.ssz import (
     DepositMessage,
     compute_deposit_domain,
     compute_signing_root,
 )
-from lido_network_helpers.eth2deposit.settings import get_chain_setting
-from lido_network_helpers.constants.chains import get_eth2_chain_name
-from lido_network_helpers.contracts.w3_contracts import get_lido_contract
+from lido.eth2deposit.settings import get_chain_setting
+from lido.constants.chains import get_eth2_chain_name
+from lido.contracts.w3_contracts import get_lido_contract
 
 import concurrent
 

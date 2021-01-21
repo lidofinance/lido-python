@@ -1,6 +1,6 @@
-from lido_network_helpers.multicall import Call, Multicall
-from lido_network_helpers.constants.contract_addresses import get_node_operators_address
-from lido_network_helpers.contracts.w3_contracts import get_nos_contract
+from lido.multicall import Call, Multicall
+from lido.constants.contract_addresses import get_node_operators_address
+from lido.contracts.w3_contracts import get_nos_contract
 
 
 def split(data, chunk_length):

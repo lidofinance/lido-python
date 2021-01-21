@@ -1,5 +1,5 @@
 import time
-from lido_network_helpers import (
+from lido import (
     get_operators_data,
     get_operators_keys,
     validate_keys_multi,

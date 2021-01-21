@@ -1,6 +1,6 @@
 import os
 import json
-from lido_network_helpers.constants.chains import get_chain_name
+from lido.constants.chains import get_chain_name
 
 network = get_chain_name()
 script_dir = os.path.dirname(__file__)

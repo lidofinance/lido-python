@@ -1,5 +1,5 @@
 from ssz import ByteVector, Serializable, uint64, bytes4, bytes32, bytes48, bytes96
-from lido_network_helpers.eth2deposit.utils.constants import (
+from lido.eth2deposit.utils.constants import (
     DOMAIN_DEPOSIT,
     ZERO_BYTES32,
 )

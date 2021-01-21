@@ -2,8 +2,8 @@ from typing import List
 
 from web3.auto import w3
 
-from lido_network_helpers.multicall import Call
-from lido_network_helpers.multicall.constants import MULTICALL_ADDRESSES
+from lido.multicall import Call
+from lido.multicall.constants import MULTICALL_ADDRESSES
 
 
 class Multicall:

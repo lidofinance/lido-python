@@ -1,4 +1,4 @@
-"""Setup script for lido_network_helpers"""
+"""Setup script for Lido"""
 
 import os.path
 from setuptools import setup
@@ -9,7 +9,7 @@ with open(os.path.join(HERE, "README.md")) as fid:
     README = fid.read()
 
 setup(
-    name="lido_network_helpers",
+    name="Lido",
     version="0.1.0",
     description="Network helpers for Lido",
     long_description=README,
@@ -18,7 +18,7 @@ setup(
     author="Lido",
     author_email="info@lido.fi",
     license="MIT",
-    packages=["lido_network_helpers"],
+    packages=["lido"],
     include_package_data=True,
     install_requires=["web3", "py_ecc", "ssz"],
     python_requires=">=3.0,<4",

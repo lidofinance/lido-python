@@ -1,5 +1,5 @@
 from web3.auto import w3
-from lido_network_helpers.constants.chains import chains
+from lido.constants.chains import chains
 
 LIDO_ADDRESSES = {
     "mainnet": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",

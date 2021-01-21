@@ -1,6 +1,6 @@
 from eth_utils import to_checksum_address
 from web3.auto import w3
-from lido_network_helpers.multicall import Signature
+from lido.multicall import Signature
 
 
 class Call:

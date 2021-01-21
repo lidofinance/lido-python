@@ -1,4 +1,4 @@
-# Lido Network Helpers
+# Lido
 
 This library consolidates various functions to efficiently load network data for Lido, validate node operator keys and find key duplicates.
 
@@ -6,7 +6,7 @@ This library consolidates various functions to efficiently load network data for
 
 This library is available on PyPi:
 
-`pip install lido_network_helpers`
+`pip install lido`
 
 ## Main Features
 
