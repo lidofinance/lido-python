@@ -1,7 +1,7 @@
 """Setup script for Lido"""
 
 import os.path
-from setuptools import setup, find_packages
+from setuptools import setup, find_namespace_packages
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 
@@ -18,7 +18,7 @@ setup(
     author="Lido",
     author_email="info@lido.fi",
     license="MIT",
-    packages=find_packages(),
+    packages=find_namespace_packages(),
     include_package_data=True,
     install_requires=["web3", "py_ecc", "ssz"],
     python_requires=">=3.0,<4",
