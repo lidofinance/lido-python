@@ -13,7 +13,7 @@ def prepare_batches(keys_number):
     """Prepare batches of a supplied number range"""
 
     range_of_data = list(range(keys_number))
-    batches = split(range_of_data, 1000)
+    batches = split(range_of_data, 500)
     return list(batches)
 
 
