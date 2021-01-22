@@ -1,3 +1,5 @@
+__version__ = "0.1.0"
+
 from lido.get_operators_data import get_operators_data  # noqa: F401
 from lido.get_operators_keys import get_operators_keys  # noqa: F401
 from lido.validate_keys import validate_keys_mono  # noqa: F401
