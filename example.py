@@ -30,6 +30,16 @@ def main():
     print("finished script for", len(operators_with_checked_duplicates), "ops")
     print("TOTAL EXECUTION TIME", time.time() - start_time)
 
+    """
+    Code above would be equivalent to
+
+    from lido import fetch_and_validate
+    fetch_and_validate()
+
+    if you need all validation functions.
+
+    """
+
     start_time5 = time.time()
     stats = get_stats()
     print("fetched stats", time.time() - start_time5)
