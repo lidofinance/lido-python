@@ -28,7 +28,7 @@ Depending on the supplied WEB3_PROVIDER_URI, a correct network will be used. Eve
 
 - get_operators_keys(operator_data) -> operator_data - fetches and adds keys to operator_data
 - validate_keys_mono(operator_data) -> operator_data - validates keys in single process and adds validation results to operator_data
-- validate_keys_multi(operator_data) -> operator_data - validates keys in multiple processes and adds validation results to operator_data
+- validate_keys_multi(operator_data) -> operator_data - validates keys in multiple processes and adds validation results to operator_data, requires a main function (see example)
 - find_duplicates(operator_data) -> operator_data - finds duplicate keys and adds results to operator_data
 
 - fetch_and_validate() -> operator_data - combines fetching operator data and running all validations on it - useful when you would be running all validations on data anyway
@@ -43,7 +43,7 @@ Use a RPC provider url as an environment variable and run your script:
 
 `WEB3_PROVIDER_URI=https://eth-mainnet.provider.xx example.py`
 
-See `example.py` for a complete example.
+See `example.py` for a complete example, make sure to use a main function and a script entry point check when using validate_keys_multi() or fetch_and_validate().
 
 ## Options
 
