@@ -47,6 +47,12 @@ def get_stats(funcs_to_fetch=funcs_to_fetch):
         ]
     )()
 
+    # Return values instead of single-element tuples
+    for call in calls:
+        item = calls[call]
+        if type(item) == tuple and len(item) == 1:
+            calls[call] = item[0]
+
     actuality_data = get_data_actuality()
 
     return {**actuality_data, **calls}
