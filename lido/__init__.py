@@ -8,3 +8,4 @@ from lido.validate_keys import validate_keys_multi  # noqa: F401
 from lido.find_duplicates import find_duplicates  # noqa: F401
 from lido.fetch_and_validate import fetch_and_validate  # noqa: F401
 from lido.get_stats import get_stats  # noqa: F401
+from lido.utils.data_actuality import get_data_actuality  # noqa: F401
