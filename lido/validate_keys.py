@@ -20,8 +20,12 @@ domain = compute_deposit_domain(fork_version=fork_version)
 def validate_key(key):
     """Run signature validation on a key"""
 
-    pubkey = key["key"]
-    signature = key["depositSignature"]
+    pubkey = bytes.fromhex(key["key"]) if type(key["key"]) is str else key["key"]
+    signature = (
+        bytes.fromhex(key["depositSignature"])
+        if type(key["depositSignature"]) is str
+        else key["depositSignature"]
+    )
 
     # Minimum staking requirement of 32 ETH per validator
     REQUIRED_DEPOSIT_ETH = 32
