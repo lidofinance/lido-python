@@ -20,6 +20,10 @@ domain = compute_deposit_domain(fork_version=fork_version)
 def validate_key(key):
     """Run signature validation on a key"""
 
+    # Is this key already validated? eg in cache
+    if "valid_signature" in key.keys():
+        return
+
     pubkey = bytes.fromhex(key["key"]) if type(key["key"]) is str else key["key"]
     signature = (
         bytes.fromhex(key["depositSignature"])
@@ -48,7 +52,9 @@ def validate_keys_mono(operators):
 
     for op_i, op in enumerate(operators):
         for key_i, key in enumerate(op["keys"]):
-            operators[op_i]["keys"][key_i]["valid_signature"] = validate_key(key)
+            # Is this key already validated? eg in cache
+            if "valid_signature" not in key.keys():
+                operators[op_i]["keys"][key_i]["valid_signature"] = validate_key(key)
 
     return operators
 
@@ -78,6 +84,8 @@ def validate_keys_multi(operators):
             results = executor.map(validate_key, op["keys"])
 
             for result_i, result in enumerate(results):
-                operators[op_i]["keys"][result_i]["valid_signature"] = result
+                # Is this key already validated? eg in cache
+                if result is not None:
+                    operators[op_i]["keys"][result_i]["valid_signature"] = result
 
     return operators

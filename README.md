@@ -38,6 +38,10 @@ Depending on the supplied WEB3_PROVIDER_URI, a correct network will be used. Eve
 
 You can mix and match these functions, but make sure to use get_operators_data() first.
 
+## Notes
+
+1. Signature validation will be skipped if its results are already present in operator_data. This way you can safely load validation results from cache and add `["valid_signature"] = Boolean` to already checked keys.
+
 ## How to Use
 
 Use a RPC provider url as an environment variable and run your script:
