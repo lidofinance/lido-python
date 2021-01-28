@@ -49,9 +49,9 @@ See `example.py` for a complete example.
 
 If you are testing a new deployment of Lido, these environment variables can override addresses and ABIs:
 
-- lido_address
-- node_operators_address
-- lido_abi
-- node_operators_abi
+- LIDO_ADDRESS
+- REGISTRY_ADDRESS
+- LIDO_ABI (the file-path to the contract's ABI)
+- REGISTRY_ABI (the file-path to the contract's ABI)
 
-`WEB3_PROVIDER_URI=https://eth-mainnet.provider.xx lido_address=XXX node_operators_address=XXX lido_abi=xxx.json node_operators_abi=xxx.json example.py`
+`WEB3_PROVIDER_URI=https://eth-mainnet.provider.xx LIDO_ADDRESS=XXX REGISTRY_ADDRESS=XXX LIDO_ABI=xxx.json REGISTRY_ABI=xxx.json example.py`

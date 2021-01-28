@@ -25,7 +25,7 @@ def load_lido_abi():
 def load_operators_abi():
     """Load an appropriate ABI file for Node Operators"""
 
-    env = os.getenv("node_operators_abi")
+    env = os.getenv("REGISTRY_ABI")
 
     if env is not None:
         return json.load(open(env))

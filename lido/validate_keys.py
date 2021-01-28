@@ -1,3 +1,5 @@
+import typing as t
+
 from py_ecc.bls import G2ProofOfPossession as bls
 from lido.eth2deposit.utils.ssz import (
     DepositMessage,
@@ -17,7 +19,7 @@ fork_version = get_chain_setting(get_eth2_chain_name()).GENESIS_FORK_VERSION
 domain = compute_deposit_domain(fork_version=fork_version)
 
 
-def validate_key(key):
+def validate_key(key: t.Dict) -> bool:
     """Run signature validation on a key"""
 
     pubkey = key["key"]
@@ -52,28 +54,14 @@ def validate_keys_mono(operators):
 def validate_keys_multi(operators):
     """
     Main multi-process validation function.
+    Modifies the input! Adds "valid_signature" field to every key item.
     It will spawn an appropriate process pool for the amount of threads on processor.
-
-    --- WARNING ---
-    Required for this to work:
-
-    Main function and
-
-    if __name__ == "__main__":
-        main()
-
-    in top level scope.
-
-    --- WARNING ---
     """
 
     with concurrent.futures.ProcessPoolExecutor() as executor:
-
         for op_i, op in enumerate(operators):
-
-            results = executor.map(validate_key, op["keys"])
-
-            for result_i, result in enumerate(results):
-                operators[op_i]["keys"][result_i]["valid_signature"] = result
+            validate_key_results = executor.map(validate_key, op["keys"])
+            for key_index, validate_key_result in enumerate(validate_key_results):
+                operators[op_i]["keys"][key_index]["valid_signature"] = validate_key_result
 
     return operators

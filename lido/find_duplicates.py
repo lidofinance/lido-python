@@ -16,16 +16,14 @@ def spot_duplicates(operators, key, original_op=None):
 
 
 def find_duplicates(operators):
-    """Loop through all keys and add information about duplicates"""
+    """Loop through all keys and
+    add information about duplicates to "duplicate" and "duplicates" fields of every key """
 
     for op_i, op in enumerate(operators):
         for key_i, key in enumerate(op["keys"]):
-
-            operators[op_i]["keys"][key_i]["duplicate"] = False
-            op["keys"][key_i]["duplicates"] = []
-
+            key["duplicate"] = False
+            key["duplicates"] = []
             duplicates = spot_duplicates(operators, key, op)
-
             for duplicate_i, duplicate in enumerate(duplicates):
                 operators[op_i]["keys"][key_i]["duplicates"].append(
                     dict(
