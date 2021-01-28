@@ -73,7 +73,7 @@ def validate_keys_multi(operators):
             validate_key_results = executor.map(validate_key, op["keys"])
             for key_index, validate_key_result in enumerate(validate_key_results):
                 # Is this key already validated? eg in cache
-                if result is not None:
+                if validate_key_result is not None:
                     operators[op_i]["keys"][key_index]["valid_signature"] = validate_key_result
 
     return operators
