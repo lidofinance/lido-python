@@ -14,7 +14,7 @@ setup(
     description="Network helpers for Lido",
     long_description=README,
     long_description_content_type="text/markdown",
-    url="https://github.com/lidofinance/lido-network-helpers",
+    url="https://github.com/lidofinance/lido-python",
     author="Lido",
     author_email="info@lido.fi",
     license="MIT",
