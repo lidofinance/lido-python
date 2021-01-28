@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 def get_operators_keys(
     operators,
-    max_multicall: int = 100,
+    max_multicall: int = 300,
     registry_address: t.Optional[str] = None,
 ) -> t.List[t.Dict]:
     """Get and add signing keys to node operators
