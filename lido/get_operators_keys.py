@@ -8,24 +8,10 @@ from lido.contracts.w3_contracts import get_nos_contract
 logger = logging.getLogger(__name__)
 
 
-def split(data, chunk_length):
-    """Split data to chunks of length n"""
-    for i in range(0, len(data), chunk_length):
-        yield data[i : i + chunk_length]
-
-
-def prepare_batches(keys_number):
-    """Prepare batches of a supplied number range"""
-
-    range_of_data = list(range(keys_number))
-    batches = split(range_of_data, 500)
-    return list(batches)
-
-
 def get_operators_keys(
-        operators,
-        max_multicall: int = 100,
-        registry_address: t.Optional[str] = None,
+    operators,
+    max_multicall: int = 100,
+    registry_address: t.Optional[str] = None,
 ) -> t.List[t.Dict]:
     """Get and add signing keys to node operators
 
@@ -51,32 +37,32 @@ def get_operators_keys(
     address = registry_address or get_registry_address()
 
     for op_i, op in enumerate(operators):
-        chunks = prepare_batches(op["totalSigningKeys"])
+        total_keys = op["totalSigningKeys"]
 
         keys = []
-        for chunk in chunks:
-            calls_list = []
-            for i in chunk:
-                call = Call(
-                    address,
-                    [
-                        "getSigningKey(uint256,uint256)(bytes,bytes,bool)",
-                        op_i,
-                        i,
-                    ],
-                    [[i, None]],
-                )
-                calls_list.append(call)
-                if len(calls_list) >= max_multicall:
-                    logger.debug(f'{len(calls_list)=}')
-                    multi_call = Multicall(calls_list)()
-                    calls_list = []
-                    keys.extend(multi_call.values())
-                    break
-            if calls_list:
-                logger.debug(f'{len(calls_list)=}')
+
+        calls_list = []
+        for i in range(total_keys):
+            call = Call(
+                address,
+                [
+                    "getSigningKey(uint256,uint256)(bytes,bytes,bool)",
+                    op_i,
+                    i,
+                ],
+                [[i, None]],
+            )
+            calls_list.append(call)
+            if len(calls_list) >= max_multicall:
+                logger.debug(f"{len(calls_list)=}")
                 multi_call = Multicall(calls_list)()
+                calls_list = []
                 keys.extend(multi_call.values())
+
+        if calls_list:
+            logger.debug(f"{len(calls_list)=}")
+            multi_call = Multicall(calls_list)()
+            keys.extend(multi_call.values())
 
         function_abi = next(x for x in get_nos_contract().abi if x["name"] == "getSigningKey")
         signing_keys_keys = ["index"] + [x["name"] for x in function_abi["outputs"]]
