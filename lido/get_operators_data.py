@@ -1,12 +1,14 @@
+import typing as t
+
 from lido.multicall import Call, Multicall
-from lido.constants.contract_addresses import get_node_operators_address
+from lido.constants.contract_addresses import get_registry_address
 from lido.contracts.w3_contracts import get_nos_contract
 
 
-def get_operators_data():
+def get_operators_data(registry_address: t.Optional[str] = None):
     """Fetch information for each node operator"""
 
-    address = get_node_operators_address()
+    address = registry_address or get_registry_address()
 
     operators_n = Call(address, "getNodeOperatorsCount()(uint256)")()
 
@@ -31,12 +33,10 @@ def get_operators_data():
     calls_with_indeces = [[i] + list(item) for i, item in enumerate(calls_list)]
 
     # Getting function data from contract ABI
-    function_data = next(
-        (x for x in get_nos_contract().abi if x["name"] == "getNodeOperator"), None
-    )
+    function_abi = next(x for x in get_nos_contract().abi if x["name"] == "getNodeOperator")
 
     # Adding "id" and the rest of output name keys
-    op_keys = ["id"] + [x["name"] for x in function_data["outputs"]]
+    op_keys = ["id"] + [x["name"] for x in function_abi["outputs"]]
     operators = [dict(zip(op_keys, op)) for op in calls_with_indeces]
 
     return operators

@@ -1,3 +1,4 @@
+import logging
 import time
 from lido import (
     get_operators_data,
@@ -9,6 +10,8 @@ from lido import (
 
 
 def main():
+    logging.basicConfig(level=logging.INFO, format='%(levelname)8s %(asctime)s <daemon> %(message)s')
+
     start_time = time.time()
     operators_data = get_operators_data()
     print("loaded operators data", time.time() - start_time)

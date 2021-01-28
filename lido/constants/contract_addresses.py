@@ -17,7 +17,7 @@ NODE_OPS_ADDRESSES = {
 def get_lido_address():
     """Return an appropriate Lido address for current network"""
 
-    env = os.getenv("lido_address")
+    env = os.getenv("LIDO_ADDRESS")
 
     if env is not None:
         return env
@@ -26,10 +26,10 @@ def get_lido_address():
     return LIDO_ADDRESSES[chains[chain]]
 
 
-def get_node_operators_address():
-    """Return an appropriate Node Operator address for current network"""
+def get_registry_address():
+    """Return an appropriate Node Operator (registry) address for current network"""
 
-    env = os.getenv("node_operators_address")
+    env = os.getenv("REGISTRY_ADDRESS")
 
     if env is not None:
         return env
