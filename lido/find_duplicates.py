@@ -1,4 +1,9 @@
-def spot_duplicates(operators, key, original_op=None):
+import typing as t
+
+
+def spot_duplicates(
+    operators: t.List[t.Dict], key: t.Dict, original_op: t.Optional[t.Dict] = None
+) -> t.List:
     """Compare every available key with other keys to spot duplicates"""
 
     duplicates_found = []
@@ -15,9 +20,9 @@ def spot_duplicates(operators, key, original_op=None):
     return duplicates_found
 
 
-def find_duplicates(operators):
+def find_duplicates(operators: t.List[t.Dict]) -> t.List[t.Dict]:
     """Loop through all keys and
-    add information about duplicates to "duplicate" and "duplicates" fields of every key """
+    add information about duplicates to "duplicate" and "duplicates" fields of every key"""
 
     for op_i, op in enumerate(operators):
         for key_i, key in enumerate(op["keys"]):
