@@ -7,11 +7,14 @@ from lido.contracts.w3_contracts import get_nos_contract
 
 logger = logging.getLogger(__name__)
 
+multicall_default_batch = 300
+
 
 def get_operators_keys(
-    operators,
-    max_multicall: int = 300,
+    operators: t.List[t.Dict],
+    max_multicall: t.Optional[int] = None,
     registry_address: t.Optional[str] = None,
+    registry_abi_path: t.Optional[str] = None,
 ) -> t.List[t.Dict]:
     """Get and add signing keys to node operators
 
@@ -33,6 +36,10 @@ def get_operators_keys(
         }, ...]
     }, ...]
     """
+
+    # Default multicall batch size
+    if max_multicall is None:
+        max_multicall = multicall_default_batch
 
     address = registry_address or get_registry_address()
 
@@ -64,7 +71,11 @@ def get_operators_keys(
             multi_call = Multicall(calls_list)()
             keys.extend(multi_call.values())
 
-        function_abi = next(x for x in get_nos_contract().abi if x["name"] == "getSigningKey")
+        function_abi = next(
+            x
+            for x in get_nos_contract(address=registry_address, path=registry_abi_path).abi
+            if x["name"] == "getSigningKey"
+        )
         signing_keys_keys = ["index"] + [x["name"] for x in function_abi["outputs"]]
         signing_keys_list = [
             dict(

@@ -1,3 +1,5 @@
+import typing as t
+
 import os
 import json
 from lido.constants.chains import get_chain_name
@@ -6,8 +8,11 @@ network = get_chain_name()
 script_dir = os.path.dirname(__file__)
 
 
-def load_lido_abi():
+def load_lido_abi(path: t.Optional[str] = None):
     """Load an appropriate ABI file for Lido"""
+
+    if path:
+        return json.load(open(path))
 
     env = os.getenv("lido_abi")
 
@@ -22,8 +27,11 @@ def load_lido_abi():
         raise Exception("Unable to load Lido ABI for network")
 
 
-def load_operators_abi():
+def load_operators_abi(path: t.Optional[str] = None):
     """Load an appropriate ABI file for Node Operators"""
+
+    if path:
+        return json.load(open(path))
 
     env = os.getenv("REGISTRY_ABI")
 
@@ -31,12 +39,8 @@ def load_operators_abi():
         return json.load(open(env))
 
     if network == "mainnet":
-        return json.load(
-            open(os.path.join(script_dir, "abi/mainnet/NodeOperatorsRegistry.json"))
-        )
+        return json.load(open(os.path.join(script_dir, "abi/mainnet/NodeOperatorsRegistry.json")))
     elif network == "goerli":
-        return json.load(
-            open(os.path.join(script_dir, "abi/goerli/NodeOperatorsRegistry.json"))
-        )
+        return json.load(open(os.path.join(script_dir, "abi/goerli/NodeOperatorsRegistry.json")))
     else:
         raise Exception("Unable to load NodeOperatorsRegistry ABI for network")

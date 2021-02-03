@@ -1,3 +1,5 @@
+import typing as t
+
 import os
 
 from web3.auto import w3
@@ -14,8 +16,11 @@ NODE_OPS_ADDRESSES = {
 }
 
 
-def get_lido_address():
+def get_lido_address(address: t.Optional[str] = None) -> str:
     """Return an appropriate Lido address for current network"""
+
+    if address:
+        return address
 
     env = os.getenv("LIDO_ADDRESS")
 
@@ -26,8 +31,11 @@ def get_lido_address():
     return LIDO_ADDRESSES[chains[chain]]
 
 
-def get_registry_address():
+def get_registry_address(address: t.Optional[str] = None) -> str:
     """Return an appropriate Node Operator (registry) address for current network"""
+
+    if address:
+        return address
 
     env = os.getenv("REGISTRY_ADDRESS")
 

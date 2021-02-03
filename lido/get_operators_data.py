@@ -5,7 +5,10 @@ from lido.constants.contract_addresses import get_registry_address
 from lido.contracts.w3_contracts import get_nos_contract
 
 
-def get_operators_data(registry_address: t.Optional[str] = None):
+def get_operators_data(
+    registry_address: t.Optional[str] = None,
+    registry_abi_path: t.Optional[str] = None,
+) -> t.List[t.Dict]:
     """Fetch information for each node operator"""
 
     address = registry_address or get_registry_address()
@@ -33,7 +36,11 @@ def get_operators_data(registry_address: t.Optional[str] = None):
     calls_with_indeces = [[i] + list(item) for i, item in enumerate(calls_list)]
 
     # Getting function data from contract ABI
-    function_abi = next(x for x in get_nos_contract().abi if x["name"] == "getNodeOperator")
+    function_abi = next(
+        x
+        for x in get_nos_contract(address=registry_address, path=registry_abi_path).abi
+        if x["name"] == "getNodeOperator"
+    )
 
     # Adding "id" and the rest of output name keys
     op_keys = ["id"] + [x["name"] for x in function_abi["outputs"]]

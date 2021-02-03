@@ -1,3 +1,5 @@
+import typing as t
+
 from lido.multicall import Call, Multicall
 from lido.constants.contract_addresses import get_lido_address
 from lido.contracts.w3_contracts import get_lido_contract
@@ -15,15 +17,19 @@ funcs_to_fetch = [
 ]
 
 
-def get_stats(funcs_to_fetch=funcs_to_fetch):
+def get_stats(
+    funcs_to_fetch: t.List[str] = funcs_to_fetch,
+    lido_address: str = None,
+    lido_abi_path: str = None,
+) -> t.Dict:
     """Fetch various constants from Lido for analytics and statistics"""
 
-    address = get_lido_address()
+    address = lido_address or get_lido_address()
 
     # Getting function data from contract ABI
     funcs_from_contract = [
         x
-        for x in get_lido_contract().abi
+        for x in get_lido_contract(address=lido_address, path=lido_abi_path).abi
         if x["type"] == "function" and x["name"] in funcs_to_fetch
     ]
 
