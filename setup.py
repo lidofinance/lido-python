@@ -20,6 +20,6 @@ setup(
     license="MIT",
     packages=find_namespace_packages(),
     include_package_data=True,
-    install_requires=["web3", "py_ecc", "ssz"],
+    install_requires=["web3", "py_ecc", "ssz", "requests"],
     python_requires=">=3.0,<4",
 )

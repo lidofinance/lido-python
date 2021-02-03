@@ -13,6 +13,7 @@ python = ">3.7.1,<4"
 web3 = "^5.15.0"
 py-ecc = "^5.1.0"
 ssz = "^0.2.4"
+requests = "^2.25.1"
 
 [tool.poetry.dev-dependencies]
 
