@@ -18,9 +18,9 @@ funcs_to_fetch = [
 
 
 def get_stats(
-    funcs_to_fetch: t.List[str] = funcs_to_fetch,
-    lido_address: str = None,
-    lido_abi_path: str = None,
+    funcs_to_fetch: t.Optional[t.List[str]] = funcs_to_fetch,
+    lido_address: t.Optional[str] = None,
+    lido_abi_path: t.Optional[str] = None,
 ) -> t.Dict:
     """Fetch various constants from Lido for analytics and statistics"""
 

@@ -8,7 +8,7 @@ network = get_chain_name()
 script_dir = os.path.dirname(__file__)
 
 
-def load_lido_abi(path: t.Optional[str] = None):
+def load_lido_abi(path: t.Optional[str] = None) -> t.List[t.Dict]:
     """Load an appropriate ABI file for Lido"""
 
     if path:
@@ -27,7 +27,7 @@ def load_lido_abi(path: t.Optional[str] = None):
         raise Exception("Unable to load Lido ABI for network")
 
 
-def load_operators_abi(path: t.Optional[str] = None):
+def load_operators_abi(path: t.Optional[str] = None) -> t.List[t.Dict]:
     """Load an appropriate ABI file for Node Operators"""
 
     if path:

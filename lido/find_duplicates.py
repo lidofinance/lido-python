@@ -26,8 +26,8 @@ def find_duplicates(operators: t.List[t.Dict]) -> t.List[t.Dict]:
 
     for op_i, op in enumerate(operators):
         for key_i, key in enumerate(op["keys"]):
-            key["duplicate"] = False
-            key["duplicates"] = []
+            operators[op_i]["keys"][key_i]["duplicates"] = []
+
             duplicates = spot_duplicates(operators, key, op)
             for duplicate_i, duplicate in enumerate(duplicates):
                 operators[op_i]["keys"][key_i]["duplicates"].append(
@@ -42,5 +42,7 @@ def find_duplicates(operators: t.List[t.Dict]) -> t.List[t.Dict]:
 
             if duplicates:
                 operators[op_i]["keys"][key_i]["duplicate"] = True
+            else:
+                operators[op_i]["keys"][key_i]["duplicate"] = False
 
     return operators
