@@ -1,8 +1,11 @@
 import typing as t
+import logging
 
 from lido.multicall import Call, Multicall
 from lido.constants.contract_addresses import get_registry_address
 from lido.contracts.w3_contracts import get_nos_contract
+
+logger = logging.getLogger(__name__)
 
 
 def get_operators_data(
@@ -10,10 +13,12 @@ def get_operators_data(
     registry_abi_path: t.Optional[str] = None,
 ) -> t.List[t.Dict]:
     """Fetch information for each node operator"""
-
     address = registry_address or get_registry_address()
-
     operators_n = Call(address, "getNodeOperatorsCount()(uint256)")()
+    logger.debug(f'{operators_n=}')
+    if operators_n == 0:
+        logger.warning(f'no operators')  # fixme assert if not test env
+        return []
 
     calls = Multicall(
         [
