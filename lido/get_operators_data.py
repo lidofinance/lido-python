@@ -19,6 +19,7 @@ def get_operators_data(
     if operators_n == 0:
         logger.warning(f'no operators')  # fixme assert if not test env
         return []
+    assert operators_n < 1_000_000, 'too big operators_n'
 
     calls = Multicall(
         [
