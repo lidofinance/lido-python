@@ -308,7 +308,7 @@ format_nongpl = ["idna", "jsonpointer (>1.13)", "webcolors", "rfc3986-validator 
 
 [[package]]
 name = "lru-dict"
-version = "1.1.6"
+version = "1.1.7"
 description = "An Dict like LRU container."
 category = "main"
 optional = false
@@ -504,7 +504,7 @@ python-versions = "*"
 
 [[package]]
 name = "urllib3"
-version = "1.26.2"
+version = "1.26.3"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
 category = "main"
 optional = false
@@ -525,7 +525,7 @@ python-versions = "*"
 
 [[package]]
 name = "web3"
-version = "5.15.0"
+version = "5.16.0"
 description = "Web3.py"
 category = "main"
 optional = false
@@ -666,7 +666,7 @@ jsonschema = [
     {file = "jsonschema-3.2.0.tar.gz", hash = "sha256:c8a85b28d377cc7737e46e2d9f2b4f44ee3c0e1deac6bf46ddefc7187d30797a"},
 ]
 lru-dict = [
-    {file = "lru-dict-1.1.6.tar.gz", hash = "sha256:365457660e3d05b76f1aba3e0f7fedbfcd6528e97c5115a351ddd0db488354cc"},
+    {file = "lru-dict-1.1.7.tar.gz", hash = "sha256:45b81f67d75341d4433abade799a47e9c42a9e22a118531dcb5e549864032d7c"},
 ]
 multiaddr = [
     {file = "multiaddr-0.0.9-py2.py3-none-any.whl", hash = "sha256:5c0f862cbcf19aada2a899f80ef896ddb2e85614e0c8f04dd287c06c69dac95b"},
@@ -789,15 +789,15 @@ typing-extensions = [
     {file = "typing_extensions-3.7.4.3.tar.gz", hash = "sha256:99d4073b617d30288f569d3f13d2bd7548c3a7e4c8de87db09a9d29bb3a4a60c"},
 ]
 urllib3 = [
-    {file = "urllib3-1.26.2-py2.py3-none-any.whl", hash = "sha256:d8ff90d979214d7b4f8ce956e80f4028fc6860e4431f731ea4a8c08f23f99473"},
-    {file = "urllib3-1.26.2.tar.gz", hash = "sha256:19188f96923873c92ccb987120ec4acaa12f0461fa9ce5d3d0772bc965a39e08"},
+    {file = "urllib3-1.26.3-py2.py3-none-any.whl", hash = "sha256:1b465e494e3e0d8939b50680403e3aedaa2bc434b7d5af64dfd3c958d7f5ae80"},
+    {file = "urllib3-1.26.3.tar.gz", hash = "sha256:de3eedaad74a2683334e282005cd8d7f22f4d55fa690a2a1020a416cb0a47e73"},
 ]
 varint = [
     {file = "varint-1.0.2.tar.gz", hash = "sha256:a6ecc02377ac5ee9d65a6a8ad45c9ff1dac8ccee19400a5950fb51d594214ca5"},
 ]
 web3 = [
-    {file = "web3-5.15.0-py3-none-any.whl", hash = "sha256:d734768a9f16be9339f1c87bc5c1f4f6e2eab1757d257c330ec83506d3f26ede"},
-    {file = "web3-5.15.0.tar.gz", hash = "sha256:ea965b08fc83078b7fd578d5ce1c7cc8c7df6e1d85c097553fb45ac166b1a74e"},
+    {file = "web3-5.16.0-py3-none-any.whl", hash = "sha256:a194c638b2c27f16464f797ada7f1f840a8a671756ca7c1e843a3d6f7ab7b1c7"},
+    {file = "web3-5.16.0.tar.gz", hash = "sha256:25a2e8b6d33616ae96c9916222d454570c84d0dc69da57e330fd319a6e699390"},
 ]
 websockets = [
     {file = "websockets-8.1-cp36-cp36m-macosx_10_6_intel.whl", hash = "sha256:3762791ab8b38948f0c4d281c8b2ddfa99b7e510e46bd8dfa942a5fff621068c"},
