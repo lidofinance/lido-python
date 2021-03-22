@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lido"
-version = "0.2.2"
+version = "0.2.3"
 description = "Network helpers for Lido"
 authors = ["Lido <info@lido.fi>"]
 license = "MIT"
