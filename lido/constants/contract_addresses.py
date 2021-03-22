@@ -7,12 +7,12 @@ from lido.constants.chains import chains
 
 LIDO_ADDRESSES = {
     "mainnet": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-    "goerli": "0xA5d26F68130c989ef3e063c9bdE33BC50a86629D",
+    "goerli": "0x5feb011f04ec47ca42e75f5ac2bea4c50a646054",
 }
 
 NODE_OPS_ADDRESSES = {
     "mainnet": "0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5",
-    "goerli": "0xB1e7Fb9E9A71063ab552dDEE87Ea8C6eEc7F5c7A",
+    "goerli": "0xc210f98f7bf724ad1ec14064137abce4403f7e4f",
 }
 
 
