@@ -10,7 +10,7 @@ with open(os.path.join(HERE, "README.md")) as fid:
 
 setup(
     name="Lido",
-    version="0.2.5",
+    version="0.2.6",
     description="Network helpers for Lido",
     long_description=README,
     long_description_content_type="text/markdown",
