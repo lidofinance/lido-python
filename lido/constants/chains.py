@@ -14,6 +14,6 @@ def get_eth2_chain_name() -> str:
 
     # Return Pyrmont for Goerli deployment
     if w3.eth.chainId == 5:
-        return "pyrmont"
+        return "prater"
 
     return chains[w3.eth.chainId]
