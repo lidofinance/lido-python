@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lido"
-version = "0.2.4"
+version = "0.2.5"
 description = "Network helpers for Lido"
 authors = ["Lido <info@lido.fi>"]
 license = "MIT"
@@ -12,7 +12,7 @@ homepage = "https://lido.fi"
 python = ">3.7.1,<4"
 web3 = "^5.15.0"
 py-ecc = "^5.1.0"
-ssz = "^0.2.4"
+ssz = "^0.2.5"
 requests = "^2.25.1"
 
 [tool.poetry.dev-dependencies]

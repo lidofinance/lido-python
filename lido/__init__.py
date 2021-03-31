@@ -1,4 +1,4 @@
-__version__ = "0.2.4"
+__version__ = "0.2.5"
 
 from lido.get_operators_data import get_operators_data  # noqa: F401
 from lido.get_operators_keys import get_operators_keys  # noqa: F401
