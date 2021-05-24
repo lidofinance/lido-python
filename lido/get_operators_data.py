@@ -12,7 +12,21 @@ def get_operators_data(
     registry_address: t.Optional[str] = None,
     registry_abi_path: t.Optional[str] = None,
 ) -> t.List[t.Dict]:
-    """Fetch information for each node operator"""
+    """Fetch information for each node operator
+    
+    Example output:
+    [{
+        'id': 0, 
+        'active': True, 
+        'name': 'Staking Facilities', 
+        'rewardAddress': '0xdd4bc51496dc93a0c47008e820e0d80745476f22', 
+        'stakingLimit': 2040, 
+        'stoppedValidators': 0, 
+        'totalSigningKeys': 2500, 
+        'usedSigningKeys': 2000
+    }...]
+    """
+
     address = registry_address or get_registry_address()
     operators_n = Call(address, "getNodeOperatorsCount()(uint256)")()
     logger.debug(f'{operators_n=}')
