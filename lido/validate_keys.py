@@ -64,14 +64,18 @@ def validate_keys_mono(
     # Prepare network vars
     lido = get_lido_contract(w3, address=lido_address, path=lido_abi_path)
     withdrawal_credentials = bytes(lido.functions.getWithdrawalCredentials().call())
+    chain_id = w3.eth.chainId
 
     for op_i, op in enumerate(operators):
         for key_i, key in enumerate(op["keys"]):
             # Is this key already validated?
             if "valid_signature" not in key.keys():
                 operators[op_i]["keys"][key_i]["valid_signature"] = validate_key(
-                    w3.eth.chainId,
-                    {"key": key, "withdrawal_credentials": withdrawal_credentials}
+                    {
+                        "chain_id": chain_id, 
+                        "key": key, 
+                        "withdrawal_credentials": withdrawal_credentials
+                    }
                 )
 
     return operators
@@ -130,6 +134,7 @@ def validate_key_list_multi(
     # Prepare network
     lido = get_lido_contract(w3, address=lido_address, path=lido_abi_path)
     withdrawal_credentials = bytes(lido.functions.getWithdrawalCredentials().call())
+    chain_id = w3.eth.chainId
 
     invalid = []
 
@@ -137,7 +142,11 @@ def validate_key_list_multi(
 
         # Pass {key,withdrawal_credentials} to overcome 1-arg limit of concurrency.map()
         arguments = [
-            {"key": key, "withdrawal_credentials": withdrawal_credentials} for key in input
+            {
+                "chain_id": chain_id, 
+                "key": key, 
+                "withdrawal_credentials": withdrawal_credentials
+            } for key in input
         ]
 
         validate_key_results = executor.map(lambda x: validate_key(w3.eth.chainId, x), arguments)
