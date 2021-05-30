@@ -12,3 +12,4 @@ from lido.fetch_and_validate import fetch_and_validate  # noqa: F401
 from lido.get_stats import get_stats  # noqa: F401
 from lido.beacon import get_beacon  # noqa: F401
 from lido.utils.data_actuality import get_data_actuality  # noqa: F401
+from lido.main import Lido

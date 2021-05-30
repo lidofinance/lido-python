@@ -2,7 +2,6 @@ import typing as t
 
 import os
 
-from web3.auto import w3
 from lido.constants.chains import chains
 
 LIDO_ADDRESSES = {
@@ -16,31 +15,13 @@ NODE_OPS_ADDRESSES = {
 }
 
 
-def get_lido_address(address: t.Optional[str] = None) -> str:
+def get_default_lido_address(chain_id) -> str:
     """Return an appropriate Lido address for current network"""
 
-    if address:
-        return address
-
-    env = os.getenv("LIDO_ADDRESS")
-
-    if env is not None:
-        return env
-
-    chain = w3.eth.chainId
-    return LIDO_ADDRESSES[chains[chain]]
+    return LIDO_ADDRESSES[chains[chain_id]]
 
 
-def get_registry_address(address: t.Optional[str] = None) -> str:
+def get_default_registry_address(chain_name) -> str:
     """Return an appropriate Node Operator (registry) address for current network"""
 
-    if address:
-        return address
-
-    env = os.getenv("REGISTRY_ADDRESS")
-
-    if env is not None:
-        return env
-
-    chain = w3.eth.chainId
-    return NODE_OPS_ADDRESSES[chains[chain]]
+    return NODE_OPS_ADDRESSES[chain_name]

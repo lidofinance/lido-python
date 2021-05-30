@@ -2,19 +2,17 @@ import typing as t
 import logging
 
 from lido.multicall import Call, Multicall
-from lido.constants.contract_addresses import get_registry_address
 from lido.contracts.w3_contracts import get_nos_contract
 
 logger = logging.getLogger(__name__)
 
-multicall_default_batch = 300
-
 
 def get_operators_keys(
+    w3,
     operators: t.List[t.Dict],
-    max_multicall: t.Optional[int] = None,
-    registry_address: t.Optional[str] = None,
-    registry_abi_path: t.Optional[str] = None,
+    registry_address: str,
+    registry_abi_path: str,
+    max_multicall: int,
 ) -> t.List[t.Dict]:
     """Get and add signing keys to node operators
 
@@ -37,12 +35,6 @@ def get_operators_keys(
     }, ...]
     """
 
-    # Default multicall batch size
-    if max_multicall is None:
-        max_multicall = multicall_default_batch
-
-    address = registry_address or get_registry_address()
-
     for op_i, op in enumerate(operators):
         total_keys = op["totalSigningKeys"]
 
@@ -51,7 +43,8 @@ def get_operators_keys(
         calls_list = []
         for i in range(total_keys):
             call = Call(
-                address,
+                w3,
+                registry_address,
                 [
                     "getSigningKey(uint256,uint256)(bytes,bytes,bool)",
                     op_i,
@@ -62,18 +55,18 @@ def get_operators_keys(
             calls_list.append(call)
             if len(calls_list) >= max_multicall:
                 logger.debug(f"{len(calls_list)=}")
-                multi_call = Multicall(calls_list)()
+                multi_call = Multicall(w3, calls_list)()
                 calls_list = []
                 keys.extend(multi_call.values())
 
         if calls_list:
             logger.debug(f"{len(calls_list)=}")
-            multi_call = Multicall(calls_list)()
+            multi_call = Multicall(w3, calls_list)()
             keys.extend(multi_call.values())
 
         function_abi = next(
             x
-            for x in get_nos_contract(address=registry_address, path=registry_abi_path).abi
+            for x in get_nos_contract(w3, address=registry_address, path=registry_abi_path).abi
             if x["name"] == "getSigningKey"
         )
         signing_keys_keys = ["index"] + [x["name"] for x in function_abi["outputs"]]

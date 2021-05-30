@@ -1,18 +1,18 @@
 from typing import List
 
-from web3.auto import w3
-
 from lido.multicall import Call
 from lido.multicall.constants import MULTICALL_ADDRESSES
 
 
 class Multicall:
-    def __init__(self, calls: List[Call]):
+    def __init__(self, w3, calls: List[Call]):
+        self.w3 = w3
         self.calls = calls
 
     def __call__(self):
         aggregate = Call(
-            MULTICALL_ADDRESSES[w3.eth.chainId],
+            self.w3,
+            MULTICALL_ADDRESSES[self.w3.eth.chainId],
             "aggregate((address,bytes)[])(uint256,bytes[])",
         )
         args = [[[call.target, call.data] for call in self.calls]]

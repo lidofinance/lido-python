@@ -2,15 +2,16 @@ import typing as t
 import logging
 
 from lido.multicall import Call, Multicall
-from lido.constants.contract_addresses import get_registry_address
+# from lido.constants.contract_addresses import get_registry_address
 from lido.contracts.w3_contracts import get_nos_contract
 
 logger = logging.getLogger(__name__)
 
 
 def get_operators_data(
-    registry_address: t.Optional[str] = None,
-    registry_abi_path: t.Optional[str] = None,
+    w3,
+    registry_address: str,
+    registry_abi_path: str,
 ) -> t.List[t.Dict]:
     """Fetch information for each node operator
     
@@ -27,8 +28,7 @@ def get_operators_data(
     }...]
     """
 
-    address = registry_address or get_registry_address()
-    operators_n = Call(address, "getNodeOperatorsCount()(uint256)")()
+    operators_n = Call(w3, registry_address, "getNodeOperatorsCount()(uint256)")()
     logger.debug(f'{operators_n=}')
     if operators_n == 0:
         logger.warning(f'no operators')  # fixme assert if not test env
@@ -36,9 +36,11 @@ def get_operators_data(
     assert operators_n < 1_000_000, 'too big operators_n'
 
     calls = Multicall(
+        w3,
         [
             Call(
-                address,
+                w3,
+                registry_address,
                 [
                     "getNodeOperator(uint256,bool)(bool,string,address,uint64,uint64,uint64,uint64)",
                     i,
@@ -58,7 +60,7 @@ def get_operators_data(
     # Getting function data from contract ABI
     function_abi = next(
         x
-        for x in get_nos_contract(address=registry_address, path=registry_abi_path).abi
+        for x in get_nos_contract(w3, address=registry_address, path=registry_abi_path).abi
         if x["name"] == "getNodeOperator"
     )
 
