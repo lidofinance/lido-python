@@ -23,12 +23,12 @@ class Lido:
         self.w3 = w3
         self.chain_id = w3.eth.chainId
 
-        # Inject middleware for geth if we are on Goerli
+        # Check if PoA middleware is injected if we are on Goerli
         if self.chain_id == 5:
             from web3.middleware import geth_poa_middleware
-
-            self.w3.middleware_onion.inject(geth_poa_middleware, layer=0) # handle exception if already added
-            # maybe raise an exception so the user add middleware by herself
+            # Checking by value b/c we don't know the key
+            if geth_poa_middleware not in self.w3.middleware_onion:
+                raise ValueError("Geth PoA middleware is not injected into Web3 middleware onion")
 
         self.chain_name = get_chain_name(self.chain_id)
         self.registry_address = registry_address or get_default_registry_address(self.chain_name)
