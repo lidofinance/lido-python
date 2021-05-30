@@ -13,11 +13,12 @@ from lido.contracts.w3_contracts import get_lido_contract
 import concurrent
 
 
-def validate_key(chain_id, data: t.Dict) -> t.Optional[bool]:
+def validate_key(data: t.Dict) -> t.Optional[bool]:
     """Run signature validation on a key"""
 
     key = data["key"]
     withdrawal_credentials = data["withdrawal_credentials"]
+    chain_id = data["chain_id"]
 
     # Is this key already validated?
     if "valid_signature" in key.keys():
@@ -91,16 +92,21 @@ def validate_keys_multi(
     # Prepare network vars
     lido = get_lido_contract(w3, address=lido_address, path=lido_abi_path)
     withdrawal_credentials = bytes(lido.functions.getWithdrawalCredentials().call())
+    chain_id = w3.eth.chainId
 
     with concurrent.futures.ProcessPoolExecutor() as executor:
         for op_i, op in enumerate(operators):
 
             # Pass {key,withdrawal_credentials} to overcome 1-arg limit of concurrency.map()
             arguments = [
-                {"key": key, "withdrawal_credentials": withdrawal_credentials} for key in op["keys"]
+                {
+                    "chain_id": chain_id, 
+                    "key": key, 
+                    "withdrawal_credentials": withdrawal_credentials
+                } for key in op["keys"]
             ]
 
-            validate_key_results = executor.map(lambda x: validate_key(w3.eth.chainId, x), arguments)
+            validate_key_results = executor.map(validate_key, arguments)
 
             for key_index, validate_key_result in enumerate(validate_key_results):
                 # Is this key already validated?
