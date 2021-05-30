@@ -13,7 +13,7 @@ from lido.contracts.w3_contracts import get_lido_contract
 import concurrent
 
 
-def validate_key(w3, data: t.Dict) -> t.Optional[bool]:
+def validate_key(chain_id, data: t.Dict) -> t.Optional[bool]:
     """Run signature validation on a key"""
 
     key = data["key"]
@@ -30,7 +30,7 @@ def validate_key(w3, data: t.Dict) -> t.Optional[bool]:
         else key["depositSignature"]
     )
 
-    fork_version = get_chain_setting(get_eth2_chain_name(w3.eth.chainId)).GENESIS_FORK_VERSION
+    fork_version = get_chain_setting(get_eth2_chain_name(chain_id)).GENESIS_FORK_VERSION
     domain = compute_deposit_domain(fork_version=fork_version)
 
     # Minimum staking requirement of 32 ETH per validator
@@ -69,7 +69,7 @@ def validate_keys_mono(
             # Is this key already validated?
             if "valid_signature" not in key.keys():
                 operators[op_i]["keys"][key_i]["valid_signature"] = validate_key(
-                    w3,
+                    w3.eth.chainId,
                     {"key": key, "withdrawal_credentials": withdrawal_credentials}
                 )
 
@@ -100,7 +100,7 @@ def validate_keys_multi(
                 {"key": key, "withdrawal_credentials": withdrawal_credentials} for key in op["keys"]
             ]
 
-            validate_key_results = executor.map(lambda x: validate_key(w3, x), arguments)
+            validate_key_results = executor.map(lambda x: validate_key(w3.eth.chainId, x), arguments)
 
             for key_index, validate_key_result in enumerate(validate_key_results):
                 # Is this key already validated?
@@ -134,7 +134,7 @@ def validate_key_list_multi(
             {"key": key, "withdrawal_credentials": withdrawal_credentials} for key in input
         ]
 
-        validate_key_results = executor.map(lambda x: validate_key(w3, x), arguments)
+        validate_key_results = executor.map(lambda x: validate_key(w3.eth.chainId, x), arguments)
 
         for key_index, validate_key_result in enumerate(validate_key_results):
             # Is this key already validated?
