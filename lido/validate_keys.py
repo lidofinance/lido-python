@@ -149,7 +149,7 @@ def validate_key_list_multi(
             } for key in input
         ]
 
-        validate_key_results = executor.map(lambda x: validate_key(w3.eth.chainId, x), arguments)
+        validate_key_results = executor.map(validate_key, arguments)
 
         for key_index, validate_key_result in enumerate(validate_key_results):
             # Is this key already validated?
