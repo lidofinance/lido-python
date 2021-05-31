@@ -1,6 +1,6 @@
 from lido.get_stats import get_stats
 from lido.find_duplicates import find_duplicates
-from lido.validate_keys import validate_keys_multi
+from lido.validate_keys import validate_keys_mono, validate_keys_multi
 from lido.get_operators_keys import get_operators_keys
 import typing as t
 from lido.contracts.abi_loader import get_default_lido_abi_path, get_default_operators_abi_path
@@ -45,6 +45,9 @@ class Lido:
 
     def validate_keys_multi(self, operators_with_keys):
         return validate_keys_multi(self.w3, operators_with_keys, self.lido_address, self.lido_abi_path)
+
+    def validate_keys_mono(self, operators_with_keys):
+        return validate_keys_mono(self.w3, operators_with_keys, self.lido_address, self.lido_abi_path)
 
     def find_duplicates(self, operators_with_validated_keys):
         return find_duplicates(operators_with_validated_keys)
