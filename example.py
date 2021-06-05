@@ -1,7 +1,7 @@
 import logging
 import time
 
-from web3 import Web3
+from web3.auto import w3
 from lido import Lido
 
 
@@ -9,8 +9,10 @@ def main():
     logging.basicConfig(level=logging.INFO, format='%(levelname)8s %(asctime)s <daemon> %(message)s')
 
     start_time = time.time()
-    
-    w3 = Web3(Web3.HTTPProvider('https://mainnet.infura.io/v3/4d7d0546182b4b21820c7ca343dd0460'))
+
+    if w3.eth.chainId == 5:
+        from web3.middleware import geth_poa_middleware
+        w3.middleware_onion.inject(geth_poa_middleware, layer=0)
     lido = Lido(w3)
 
     operators_data = lido.get_operators_data()
