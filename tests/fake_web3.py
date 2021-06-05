@@ -23,25 +23,26 @@ class FakeContract:
         self.functions = self.function_class()
         self.eth = eth
 
-    def add_contract_method(self, signature, handler):
-        parts = parse_signature(signature)
-        function_with_inputs = "".join(parts[:2])
-        sign = function_signature_to_4byte_selector(function_with_inputs)
-        self.handlers[sign] = handler
-        self.signatures[sign] = signature
+    def add_contract_method(self, full_signature_str, handler):
+        parts = parse_signature(full_signature_str)
+        function_name_with_inputs = "".join(parts[:2])
+        signature_bytes = function_signature_to_4byte_selector(
+            function_name_with_inputs)
+        self.handlers[signature_bytes] = handler
+        self.signatures[signature_bytes] = full_signature_str
         function_object = FakeFunction(handler, self.eth)
         setattr(self.function_class, parts[0], lambda self: function_object)
 
     def call(self, data):
-        function_sign = data[:4]
-        signature = self.signatures[function_sign]
-        psign = parse_signature(signature)
-        input_types = psign[1]
-        output_types = psign[2]
-        input = decode_single(input_types, data[4:])
-        handler = self.handlers[function_sign]
-        ret = handler(self.eth, input)
-        return encode_single(output_types, ret)
+        signature_bytes = data[:4]
+        full_signature_str = self.signatures[signature_bytes]
+        parsed_signature = parse_signature(full_signature_str)
+        input_types = parsed_signature[1]
+        output_types = parsed_signature[2]
+        input_data = decode_single(input_types, data[4:])
+        handler = self.handlers[signature_bytes]
+        result = handler(self.eth, input_data)
+        return encode_single(output_types, result)
 
 
 class FakeEth:
