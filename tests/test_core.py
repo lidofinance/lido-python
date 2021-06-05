@@ -5,6 +5,7 @@ from lido.multicall.constants import MULTICALL_ADDRESSES
 
 from tests.fake_web3 import FakeWeb3, FakeContract
 
+
 def test_get_operators():
     def fake_getNodeOperatorsCount(eth, data):
         return [4]
@@ -13,23 +14,38 @@ def test_get_operators():
         id = data[0]
         return [
             True,
-            'Staking Facilities', 
-            '0xdd4bc51496dc93a0c47008e820e0d80745476f22', 
+            'Staking Facilities',
+            '0xdd4bc51496dc93a0c47008e820e0d80745476f22',
             2040, 0, 2500, 2000]
 
     def fake_aggregate(eth, data):
         return [0, [
-            eth.call({'to': MULTICALL_ADDRESSES[web3.eth.chainId], 'data': x[1]}) for x in data[0]
-            ]]
+            eth.call({
+                'to': MULTICALL_ADDRESSES[web3.eth.chainId],
+                'data': x[1]
+            }) for x in data[0]
+        ]]
 
     web3 = FakeWeb3()
     web3.eth.chainId = 5
     lido = Lido(web3)
-    lido_contract = FakeContract(lido.registry_address, load_lido_abi(lido.registry_abi_path), web3.eth)
-    lido_contract.add_contract_method("getNodeOperatorsCount()(uint256)", fake_getNodeOperatorsCount)
-    lido_contract.add_contract_method("getNodeOperator(uint256,bool)(bool,string,address,uint64,uint64,uint64,uint64)", fake_getNodeOperator)
-    mcall_contract = FakeContract(MULTICALL_ADDRESSES[web3.eth.chainId], None, web3.eth)
-    mcall_contract.add_contract_method("aggregate((address,bytes)[])(uint256,bytes[])", fake_aggregate)
+    lido_contract = FakeContract(
+        lido.registry_address,
+        load_lido_abi(lido.registry_abi_path),
+        web3.eth)
+    lido_contract.add_contract_method(
+        "getNodeOperatorsCount()(uint256)",
+        fake_getNodeOperatorsCount)
+    lido_contract.add_contract_method(
+        "getNodeOperator(uint256,bool)(bool,string,address,uint64,uint64,uint64,uint64)",
+        fake_getNodeOperator)
+    mcall_contract = FakeContract(
+        MULTICALL_ADDRESSES[web3.eth.chainId],
+        None,
+        web3.eth)
+    mcall_contract.add_contract_method(
+        "aggregate((address,bytes)[])(uint256,bytes[])",
+        fake_aggregate)
     web3.eth.add_contract(lido_contract)
     web3.eth.add_contract(mcall_contract)
 
@@ -45,8 +61,8 @@ def test_get_operators_keys():
         op_id = data[0]
         key_id = data[1]
         return [
-            b'\x81\xb4\xaea\xa8\x989i\x03\x89\x7f\x94\xbe\xa0\xe0b\xc3\xa6\x92^\xe9=0\xf4\xd4\xae\xe9;S;IU\x1a\xc37\xdax\xff*\xb0\xcf\xbb\n\xdb8\x0c\xad\x94', 
-            b'\x96\xa8\x8f\x8e\x88>\x9f\xf6\xf3\x97Q\xa2\xcb\xfc\xa3\x94\x9fO\xa9j\xe9\x84D\xd0\x05\xb6\xea\x9f\xaa\xc0\xc3KR\xd5\x95\xf9B\x8d\x90\x1d\xdd\x815$\x83}\x86d\x01\xedL\xed=\x84\xe7\xe88\xa2e\x06\xae.\xf3\xbf\x0b\xf1\xb8\xd3\x8b+\xd7\xbd\xb6\xc1<_F\xb8H\xd0-\xdc\x11\x08d\x9e\x96\x07\xcfM/\xce\xcd\xd8\x07\xbb', 
+            b'\x81\xb4\xaea\xa8\x989i\x03\x89\x7f\x94\xbe\xa0\xe0b\xc3\xa6\x92^\xe9=0\xf4\xd4\xae\xe9;S;IU\x1a\xc37\xdax\xff*\xb0\xcf\xbb\n\xdb8\x0c\xad\x94',
+            b'\x96\xa8\x8f\x8e\x88>\x9f\xf6\xf3\x97Q\xa2\xcb\xfc\xa3\x94\x9fO\xa9j\xe9\x84D\xd0\x05\xb6\xea\x9f\xaa\xc0\xc3KR\xd5\x95\xf9B\x8d\x90\x1d\xdd\x815$\x83}\x86d\x01\xedL\xed=\x84\xe7\xe88\xa2e\x06\xae.\xf3\xbf\x0b\xf1\xb8\xd3\x8b+\xd7\xbd\xb6\xc1<_F\xb8H\xd0-\xdc\x11\x08d\x9e\x96\x07\xcfM/\xce\xcd\xd8\x07\xbb',
             True]
 
     operators = [{'id': 0, 'active': True, 'name': 'Staking Facilities', 'rewardAddress': '0xdd4bc51496dc93a0c47008e820e0d80745476f22', 'stakingLimit': 2040, 'stoppedValidators': 0, 'totalSigningKeys': 2500, 'usedSigningKeys': 2000}, {'id': 1, 'active': True, 'name': 'Staking Facilities', 'rewardAddress': '0xdd4bc51496dc93a0c47008e820e0d80745476f22', 'stakingLimit': 2040, 'stoppedValidators': 0, 'totalSigningKeys': 2500, 'usedSigningKeys': 2000}, {'id': 2, 'active': True, 'name': 'Staking Facilities', 'rewardAddress': '0xdd4bc51496dc93a0c47008e820e0d80745476f22', 'stakingLimit': 2040, 'stoppedValidators': 0, 'totalSigningKeys': 2500, 'usedSigningKeys': 2000}, {'id': 3, 'active': True, 'name': 'Staking Facilities', 'rewardAddress': '0xdd4bc51496dc93a0c47008e820e0d80745476f22', 'stakingLimit': 2040, 'stoppedValidators': 0, 'totalSigningKeys': 2500, 'usedSigningKeys': 2000}]
@@ -54,8 +70,13 @@ def test_get_operators_keys():
     web3 = FakeWeb3()
     web3.eth.chainId = 5
     lido = Lido(web3)
-    lido_contract = FakeContract(lido.registry_address, load_lido_abi(lido.registry_abi_path), web3.eth)
-    lido_contract.add_contract_method("getSigningKey(uint256,uint256)(bytes,bytes,bool)", fake_getSigningKey)
+    lido_contract = FakeContract(
+        lido.registry_address,
+        load_lido_abi(lido.registry_abi_path),
+        web3.eth)
+    lido_contract.add_contract_method(
+        "getSigningKey(uint256,uint256)(bytes,bytes,bool)",
+        fake_getSigningKey)
     web3.eth.add_contract(lido_contract)
 
     operators_w_keys = lido.get_operators_keys(operators)
@@ -70,9 +91,12 @@ def test_validate_keys():
     web3 = FakeWeb3()
     web3.eth.chainId = 5
     lido = Lido(web3)
-    lido_contract = FakeContract(lido.lido_address, load_lido_abi(lido.lido_abi_path), web3.eth)
+    lido_contract = FakeContract(
+        lido.lido_address,
+        load_lido_abi(lido.lido_abi_path),
+        web3.eth)
     lido_contract.add_contract_method(
-        "getWithdrawalCredentials()(bytes32)", 
+        "getWithdrawalCredentials()(bytes32)",
         lambda eth: b'\x00\x04\x05\x17\xce\x98\xf8\x10p\xce\xa2\x0e5a\n:\xe2:E\xf0\x88;\x0b\x03Z\xfcW\x17\xcc.\x83>')
     web3.eth.add_contract(lido_contract)
 

@@ -15,7 +15,8 @@ def fetch_and_validate(
     registry_address: t.Optional[str] = None,
     registry_abi_path: t.Optional[str] = None,
 ) -> t.List[t.Dict]:
-    """fetches all operator keys, and run keys validations and duplication checks
+    """
+    fetches all operator keys, and run keys validations and duplication checks
 
     check fields:
      - operators[op_i]["keys"][key_i]["duplicate"]
@@ -35,7 +36,9 @@ def fetch_and_validate(
     )
 
     data_validated_keys = validate_keys_multi(
-        operators=data_with_keys, lido_address=lido_address, lido_abi_path=lido_abi_path
+        operators=data_with_keys,
+        lido_address=lido_address,
+        lido_abi_path=lido_abi_path
     )
 
     data_found_duplicates = find_duplicates(operators=data_validated_keys)
