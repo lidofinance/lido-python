@@ -24,7 +24,7 @@ class FakeContract:
         self.functions = self.function_class()
         self.eth = eth
 
-    def add_contract_method(self, signature, handler, address=None):
+    def add_contract_method(self, signature, handler):
         parts = parse_signature(signature)
         function_with_inputs = "".join(parts[:2])
         sign = function_signature_to_4byte_selector(function_with_inputs)
