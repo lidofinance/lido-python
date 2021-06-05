@@ -1,7 +1,6 @@
 from lido.multicall.signature import parse_signature
 from eth_abi import encode_single, decode_single
 from eth_utils import function_signature_to_4byte_selector
-from web3.middleware import geth_poa_middleware
 
 
 class FakeFunction():
@@ -63,5 +62,4 @@ class FakeEth:
 
 
 class FakeWeb3:
-    middleware_onion = [geth_poa_middleware]
     eth = FakeEth()
