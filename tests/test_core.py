@@ -216,13 +216,7 @@ def test_find_duplicates():
         "r") as test_data:
         operators = ast.literal_eval(test_data.read())
 
-    web3 = FakeWeb3()
-    web3.eth.chainId = 1
-    web3.middleware_onion = []
-
-    lido = Lido(web3)
-
-    operators_with_checked_duplicates = lido.find_duplicates(operators)
+    operators_with_checked_duplicates = Lido.find_duplicates(operators)
 
     assert operators_with_checked_duplicates[0]['keys'][0]['duplicate'] == False
     assert operators_with_checked_duplicates[0]['keys'][1]['duplicate'] == True

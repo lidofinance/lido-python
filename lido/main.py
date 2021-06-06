@@ -74,7 +74,8 @@ class Lido:
             self.lido_address,
             self.lido_abi_path)
 
-    def find_duplicates(self, operators_with_validated_keys):
+    @staticmethod
+    def find_duplicates(operators_with_validated_keys):
         return find_duplicates(operators_with_validated_keys)
 
     def fetch_and_validate(self):
