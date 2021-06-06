@@ -44,7 +44,7 @@ Depending on which network is configured in web3 object, a set of contracts will
 
 - lido.fetch_and_validate() -> operator_data - combines fetching operator data and running all validations on it - useful when you would be running all validations on data anyway
 
-- get_stats() -> stats - fetches various constants from Lido contract, but you can even pass a list of functions to fetch eg get_stats([isStopped])
+- lido.get_stats() -> stats - fetches various constants from Lido contract, but you can even pass a list of functions to fetch eg get_stats([isStopped])
 
 You can mix and match these functions, but make sure to use get_operators_data() first.
 
