@@ -10,6 +10,7 @@ from lido import get_operators_data
 from lido.constants.chains import get_chain_name
 from lido.constants.contract_addresses import \
     get_default_lido_address, get_default_registry_address
+from lido.contracts.w3_contracts import get_lido_contract, get_nos_contract
 
 multicall_default_batch = 300
 
@@ -105,3 +106,15 @@ class Lido:
             self.w3,
             lido_address=self.lido_address,
             lido_abi_path=self.lido_abi_path)
+
+    def lido_self_check(self):
+        """
+        Testing interaction with Lido contracts
+        """
+        nos_contract = get_nos_contract(self.w3, address=self.registry_address, path=self.registry_abi_path)
+        nos_contract.functions.getNodeOperatorsCount().call()
+        nos_contract.functions.getNodeOperator(0, True).call()
+        nos_contract.functions.getSigningKey(0, 0).call()
+
+        lido_contract = get_lido_contract(self.w3, address=self.lido_address, path=self.lido_abi_path)
+        lido_contract.functions.getWithdrawalCredentials().call()
