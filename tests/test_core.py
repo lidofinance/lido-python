@@ -205,6 +205,25 @@ def test_different_validate_keys_methods():
         operators_with_validated_keys_multi
 
 
+def test_validate_key():
+    operators = load_test_data_from_file("operators_with_valid_keys_goerly.txt")
+
+    should_be_true = Lido.validate_key(
+        5,
+        operators[0]['keys'][0],
+        b'\x00\x04\x05\x17\xce\x98\xf8\x10p\xce\xa2\x0e5a\n:\xe2:E\xf0\x88;\x0b\x03Z\xfcW\x17\xcc.\x83>'
+    )
+    assert should_be_true == True
+
+    should_be_false = Lido.validate_key(
+        1,
+        operators[0]['keys'][0],
+        b'\x00\x04\x05\x17\xce\x98\xf8\x10p\xce\xa2\x0e5a\n:\xe2:E\xf0\x88;\x0b\x03Z\xfcW\x17\xcc.\x83>'
+    )
+    assert should_be_false == False
+
+
+
 def test_find_duplicates():
     operators = load_test_data_from_file("operators_with_duplicated_keys_goerly.txt")
 

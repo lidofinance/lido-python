@@ -1,6 +1,7 @@
 from lido.get_stats import get_stats
 from lido.find_duplicates import find_duplicates
-from lido.validate_keys import validate_keys_mono, validate_keys_multi
+from lido.validate_keys import validate_keys_mono, validate_keys_multi, \
+    validate_key
 from lido.get_operators_keys import get_operators_keys
 import typing as t
 from lido.contracts.abi_loader import \
@@ -77,6 +78,16 @@ class Lido:
     @staticmethod
     def find_duplicates(operators_with_validated_keys):
         return find_duplicates(operators_with_validated_keys)
+
+    @staticmethod
+    def validate_key(chain_id, key, withdrawal_credentials):
+        return validate_key(
+                {
+                    "chain_id": chain_id, 
+                    "key": key, 
+                    "withdrawal_credentials": withdrawal_credentials
+                }
+            )
 
     def fetch_and_validate(self):
         operators_data = self.get_operators_data()
