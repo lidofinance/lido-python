@@ -7,18 +7,13 @@ from lido.multicall.constants import MULTICALL_ADDRESSES
 from web3.middleware import geth_poa_middleware
 
 from tests.fake_web3 import FakeWeb3, FakeContract
+from tests.utils import load_test_data_from_file
 
-import os
-import ast
 import copy
-
-script_dir = os.path.dirname(__file__)
 
 
 def test_get_operators():
-    with open(os.path.join(script_dir, "operators_data.txt"),
-        "r") as test_data:
-        operators = ast.literal_eval(test_data.read())
+    operators = load_test_data_from_file("operators_data.txt")
 
     def fake_getNodeOperatorsCount(eth, data):
         return [len(operators)]
@@ -106,9 +101,7 @@ def test_get_operators_keys():
 
 
 def test_validate_valid_keys_goerly():
-    with open(os.path.join(script_dir, "operators_with_valid_keys_goerly.txt"),
-        "r") as test_data:
-        operators = ast.literal_eval(test_data.read())
+    operators = load_test_data_from_file("operators_with_valid_keys_goerly.txt")
 
     web3 = FakeWeb3()
     web3.eth.chainId = 5
@@ -132,9 +125,7 @@ def test_validate_valid_keys_goerly():
 
 
 def test_validate_valid_keys_mainnet():
-    with open(os.path.join(script_dir, "operators_with_valid_keys_mainnet.txt"),
-        "r") as test_data:
-        operators = ast.literal_eval(test_data.read())
+    operators = load_test_data_from_file("operators_with_valid_keys_mainnet.txt")
 
     web3 = FakeWeb3()
     web3.eth.chainId = 1
@@ -158,9 +149,7 @@ def test_validate_valid_keys_mainnet():
 
 
 def test_validate_invalid_keys():
-    with open(os.path.join(script_dir, "operator_with_invalid_key.txt"),
-        "r") as test_data:
-        operators = ast.literal_eval(test_data.read())
+    operators = load_test_data_from_file("operator_with_invalid_key.txt")
 
     web3 = FakeWeb3()
     web3.eth.chainId = 5
@@ -183,9 +172,7 @@ def test_validate_invalid_keys():
             assert key["valid_signature"] == False
 
 def test_different_validate_keys_methods():
-    with open(os.path.join(script_dir, "operators_with_mixed_keys_goerly.txt"),
-        "r") as test_data:
-        operators = ast.literal_eval(test_data.read())
+    operators = load_test_data_from_file("operators_with_mixed_keys_goerly.txt")
 
     web3 = FakeWeb3()
     web3.eth.chainId = 5
@@ -211,10 +198,7 @@ def test_different_validate_keys_methods():
 
 
 def test_find_duplicates():
-    with open(os.path.join(script_dir, 
-    "operators_with_duplicated_keys_goerly.txt"),
-        "r") as test_data:
-        operators = ast.literal_eval(test_data.read())
+    operators = load_test_data_from_file("operators_with_duplicated_keys_goerly.txt")
 
     operators_with_checked_duplicates = Lido.find_duplicates(operators)
 
