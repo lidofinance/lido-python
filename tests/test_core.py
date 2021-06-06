@@ -72,16 +72,18 @@ def test_get_operators():
 
 
 def test_get_operators_keys():
+    operators = load_test_data_from_file("operators_with_valid_keys_goerly.txt")
 
     def fake_getSigningKey(eth, data):
         op_id = data[0]
-        key_id = data[1]
+        key_index = data[1]
+        op = list(filter(lambda x: x['id'] == op_id, operators))[0]
+        key = list(filter(lambda x: x['index'] == key_index, op['keys']))[0]
         return [
-            b'\x81\xb4\xaea\xa8\x989i\x03\x89\x7f\x94\xbe\xa0\xe0b\xc3\xa6\x92^\xe9=0\xf4\xd4\xae\xe9;S;IU\x1a\xc37\xdax\xff*\xb0\xcf\xbb\n\xdb8\x0c\xad\x94',
-            b'\x96\xa8\x8f\x8e\x88>\x9f\xf6\xf3\x97Q\xa2\xcb\xfc\xa3\x94\x9fO\xa9j\xe9\x84D\xd0\x05\xb6\xea\x9f\xaa\xc0\xc3KR\xd5\x95\xf9B\x8d\x90\x1d\xdd\x815$\x83}\x86d\x01\xedL\xed=\x84\xe7\xe88\xa2e\x06\xae.\xf3\xbf\x0b\xf1\xb8\xd3\x8b+\xd7\xbd\xb6\xc1<_F\xb8H\xd0-\xdc\x11\x08d\x9e\x96\x07\xcfM/\xce\xcd\xd8\x07\xbb',
-            True]
-
-    operators = [{'id': 0, 'active': True, 'name': 'Staking Facilities', 'rewardAddress': '0xdd4bc51496dc93a0c47008e820e0d80745476f22', 'stakingLimit': 2040, 'stoppedValidators': 0, 'totalSigningKeys': 2500, 'usedSigningKeys': 2000}, {'id': 1, 'active': True, 'name': 'Staking Facilities', 'rewardAddress': '0xdd4bc51496dc93a0c47008e820e0d80745476f22', 'stakingLimit': 2040, 'stoppedValidators': 0, 'totalSigningKeys': 2500, 'usedSigningKeys': 2000}, {'id': 2, 'active': True, 'name': 'Staking Facilities', 'rewardAddress': '0xdd4bc51496dc93a0c47008e820e0d80745476f22', 'stakingLimit': 2040, 'stoppedValidators': 0, 'totalSigningKeys': 2500, 'usedSigningKeys': 2000}, {'id': 3, 'active': True, 'name': 'Staking Facilities', 'rewardAddress': '0xdd4bc51496dc93a0c47008e820e0d80745476f22', 'stakingLimit': 2040, 'stoppedValidators': 0, 'totalSigningKeys': 2500, 'usedSigningKeys': 2000}]
+                key['key'],
+                key['depositSignature'],
+                key['used']
+            ]
 
     web3 = FakeWeb3()
     web3.eth.chainId = 5
@@ -97,9 +99,13 @@ def test_get_operators_keys():
         fake_getSigningKey)
     web3.eth.add_contract(lido_contract)
 
-    operators_w_keys = lido.get_operators_keys(operators)
+    operators_with_keys = lido.get_operators_keys(
+        [{
+            'id': op['id'],
+            'totalSigningKeys': op['totalSigningKeys'],
+        } for op in operators])
 
-    assert len(operators_w_keys) == 4
+    assert operators == operators_with_keys
 
 
 def test_validate_valid_keys_goerly():

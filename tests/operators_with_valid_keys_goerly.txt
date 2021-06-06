@@ -1,6 +1,7 @@
 [
     {
         'id': 0, 
+        'totalSigningKeys': 3,
         'keys': [
             {
                 'index': 0, 
@@ -24,6 +25,7 @@
     }, 
     {
         'id': 1, 
+        'totalSigningKeys': 3,
         'keys': [
             {
                 'index': 0, 
@@ -47,6 +49,7 @@
     }, 
     {
         'id': 2, 
+        'totalSigningKeys': 3,
         'keys': 
         [
             {
