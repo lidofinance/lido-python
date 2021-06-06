@@ -44,6 +44,7 @@ def test_get_operators():
     web3.middleware_onion = [geth_poa_middleware]
 
     lido = Lido(web3)
+
     lido_contract = FakeContract(
         lido.registry_address,
         load_lido_abi(lido.registry_abi_path),
@@ -54,6 +55,8 @@ def test_get_operators():
     lido_contract.add_contract_method(
         "getNodeOperator(uint256,bool)(bool,string,address,uint64,uint64,uint64,uint64)",
         fake_getNodeOperator)
+    web3.eth.add_contract(lido_contract)
+
     mcall_contract = FakeContract(
         MULTICALL_ADDRESSES[web3.eth.chainId],
         None,
@@ -61,7 +64,6 @@ def test_get_operators():
     mcall_contract.add_contract_method(
         "aggregate((address,bytes)[])(uint256,bytes[])",
         fake_aggregate)
-    web3.eth.add_contract(lido_contract)
     web3.eth.add_contract(mcall_contract)
 
     operators_data = lido.get_operators_data()
