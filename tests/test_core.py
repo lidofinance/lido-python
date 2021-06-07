@@ -179,6 +179,28 @@ def test_validate_invalid_keys():
         for key in op['keys']:
             assert key["valid_signature"] == False
 
+def test_validate_keys_list():
+    operators = load_test_data_from_file("operators_with_mixed_keys_goerly.txt")
+    keys = operators[0]['keys']
+
+    web3 = FakeWeb3()
+    web3.eth.chainId = 5
+    web3.middleware_onion = [geth_poa_middleware]
+
+    lido = Lido(web3)
+    lido_contract = FakeContract(
+        lido.lido_address,
+        load_lido_abi(lido.lido_abi_path),
+        web3.eth)
+    lido_contract.add_contract_method(
+        "getWithdrawalCredentials()(bytes32)",
+        lambda eth: b'\x00\x04\x05\x17\xce\x98\xf8\x10p\xce\xa2\x0e5a\n:\xe2:E\xf0\x88;\x0b\x03Z\xfcW\x17\xcc.\x83>')
+    web3.eth.add_contract(lido_contract)
+
+    invalid_keys = lido.validate_key_list_multi(keys)
+
+    assert invalid_keys == [keys[2]]
+
 def test_different_validate_keys_methods():
     operators = load_test_data_from_file("operators_with_mixed_keys_goerly.txt")
 
