@@ -1,5 +1,5 @@
 from lido.get_stats import get_stats
-from lido.find_duplicates import find_duplicates
+from lido.find_duplicates import find_duplicates, spot_duplicates
 from lido.validate_keys import validate_key_list_multi, validate_keys_mono, validate_keys_multi, \
     validate_key
 from lido.get_operators_keys import get_operators_keys
@@ -86,6 +86,10 @@ class Lido:
     @staticmethod
     def find_duplicates(operators_with_validated_keys):
         return find_duplicates(operators_with_validated_keys)
+
+    @staticmethod
+    def spot_duplicates(operators, key, original_op):
+        return spot_duplicates(operators, key, original_op)
 
     @staticmethod
     def validate_key(chain_id, key, withdrawal_credentials):

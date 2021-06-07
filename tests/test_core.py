@@ -262,6 +262,19 @@ def test_find_duplicates():
     assert operators_with_checked_duplicates[2]['keys'][2]['duplicate'] == True
 
 
+def test_spot_duplicates():
+    operators = load_test_data_from_file("operators_with_duplicated_keys_goerly.txt")
+
+    duplicates = Lido.spot_duplicates(
+        operators,
+        operators[1]['keys'][0],
+        operators[1])
+
+    assert duplicates == [{
+        "op": operators[2],
+        "key": operators[2]['keys'][2]}]
+
+
 def test_poa_middleware_check():
     web3_goerly = FakeWeb3()
     web3_goerly.eth.chainId = 5
