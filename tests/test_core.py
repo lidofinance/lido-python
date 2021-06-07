@@ -257,3 +257,87 @@ def test_poa_middleware_check():
         lido = Lido(web3_mainnet)
     except(ValueError):
         assert False, "Exception while web3 is connected to mainnet"
+
+
+def test_get_stats():
+    web3 = FakeWeb3()
+    web3.eth.chainId = 5
+    web3.middleware_onion = [geth_poa_middleware]
+    web3.eth.set_block_info({'timestamp': 1623080999, 'number': 12588300})
+
+    functions_called = set()
+
+    def fake_isStopped(eth, data):
+        functions_called.add('isStopped')
+        return [True]
+
+    def fake_getTotalPooledEther(eth, data):
+        functions_called.add('getTotalPooledEther')
+        return [1]
+
+    def fake_getWithdrawalCredentials(eth, data):
+        functions_called.add('getWithdrawalCredentials')
+        return [b'\x00']
+
+    def fake_getFee(eth, data):
+        functions_called.add('getFee')
+        return [1]
+
+    def fake_getFeeDistribution(eth, data):
+        functions_called.add('getFeeDistribution')
+        return [1, 1, 1]
+
+    def fake_getBeaconStat(eth, data):
+        functions_called.add('getBeaconStat')
+        return [1, 1, 1]
+
+    def fake_getBufferedEther(eth, data):
+        functions_called.add('getBufferedEther')
+        return [1]
+
+    def fake_aggregate(eth, data):
+        return [0, [
+            eth.call({
+                'to': MULTICALL_ADDRESSES[web3.eth.chainId],
+                'data': x[1]
+            }) for x in data[0]
+        ]]
+
+    lido = Lido(web3)
+    lido_contract = FakeContract(
+        lido.lido_address,
+        load_lido_abi(lido.lido_abi_path),
+        web3.eth)
+    lido_contract.add_contract_method("isStopped()(bool)", fake_isStopped)
+    lido_contract.add_contract_method("getTotalPooledEther()(uint256)", fake_getTotalPooledEther)
+    lido_contract.add_contract_method("getWithdrawalCredentials()(bytes32)", fake_getWithdrawalCredentials)
+    lido_contract.add_contract_method("getFee()(uint16)", fake_getFee)
+    lido_contract.add_contract_method("getFeeDistribution()(uint16,uint16,uint16)", fake_getFeeDistribution)
+    lido_contract.add_contract_method("getBeaconStat()(uint256,uint256,uint256)", fake_getBeaconStat)
+    lido_contract.add_contract_method("getBufferedEther()(uint256)", fake_getBufferedEther)
+    web3.eth.add_contract(lido_contract)
+
+    mcall_contract = FakeContract(
+        MULTICALL_ADDRESSES[web3.eth.chainId],
+        None,
+        web3.eth)
+    mcall_contract.add_contract_method(
+        "aggregate((address,bytes)[])(uint256,bytes[])",
+        fake_aggregate)
+    web3.eth.add_contract(mcall_contract)
+
+    lido.get_stats()
+
+    assert len(functions_called) == 7
+
+    functions_called = set()
+
+    funcs_to_fetch = [
+        "getTotalPooledEther",
+        "getWithdrawalCredentials",
+        "getFeeDistribution",
+        "getBufferedEther"]
+
+    lido.get_stats(funcs_to_fetch)
+
+    assert set(funcs_to_fetch) == functions_called

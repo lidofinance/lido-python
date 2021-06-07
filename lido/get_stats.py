@@ -5,23 +5,12 @@ from lido.constants.contract_addresses import get_default_lido_address
 from lido.contracts.w3_contracts import get_lido_contract
 from lido.utils.data_actuality import get_data_actuality
 
-# Default functions to execute, this can be easily overridden
-funcs_to_fetch = [
-    "isStopped",
-    "getTotalPooledEther",
-    "getWithdrawalCredentials",
-    "getFee",
-    "getFeeDistribution",
-    "getBeaconStat",
-    "getBufferedEther",
-]
-
 
 def get_stats(
     w3,
     lido_address: str,
     lido_abi_path: str,
-    funcs_to_fetch: t.Optional[t.List[str]] = funcs_to_fetch,
+    funcs_to_fetch: t.List[str],
 ) -> t.Dict:
     """Fetch various constants from Lido for analytics and statistics"""
 

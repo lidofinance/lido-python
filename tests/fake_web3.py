@@ -50,6 +50,9 @@ class FakeEth:
     handlers = {}
     signatures = {}
 
+    def set_block_info(self, block):
+        self.block = block
+
     def contract(self, address, abi):
         return self.contracts[address]
 
@@ -61,6 +64,8 @@ class FakeEth:
         contract = self.contracts[address]
         return contract.call(arg['data'])
 
+    def getBlock(self, arg):
+        return self.block
 
 class FakeWeb3:
     eth = FakeEth()

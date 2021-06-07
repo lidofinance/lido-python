@@ -101,11 +101,24 @@ class Lido:
 
         return data_found_duplicates
 
-    def get_stats(self):
+    def get_stats(self, funcs_to_fetch=None):
+        if funcs_to_fetch is None:
+            # Default functions to execute, this can be easily overridden
+            funcs_to_fetch = [
+                "isStopped",
+                "getTotalPooledEther",
+                "getWithdrawalCredentials",
+                "getFee",
+                "getFeeDistribution",
+                "getBeaconStat",
+                "getBufferedEther",
+            ]
+
         return get_stats(
             self.w3,
             lido_address=self.lido_address,
-            lido_abi_path=self.lido_abi_path)
+            lido_abi_path=self.lido_abi_path,
+            funcs_to_fetch=funcs_to_fetch)
 
     def lido_self_check(self):
         """
