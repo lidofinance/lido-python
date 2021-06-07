@@ -138,3 +138,10 @@ class Lido:
 
         lido_contract = get_lido_contract(self.w3, address=self.lido_address, path=self.lido_abi_path)
         lido_contract.functions.getWithdrawalCredentials().call()
+        lido_contract.functions.isStopped().call()
+        lido_contract.functions.getTotalPooledEther().call()
+        lido_contract.functions.getWithdrawalCredentials().call()
+        lido_contract.functions.getFee().call()
+        lido_contract.functions.getFeeDistribution().call()
+        lido_contract.functions.getBeaconStat().call()
+        lido_contract.functions.getBufferedEther().call()
