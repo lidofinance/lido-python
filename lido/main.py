@@ -23,7 +23,7 @@ class Lido:
         registry_address: t.Optional[str] = None,
         lido_abi_path: t.Optional[str] = None,
         registry_abi_path: t.Optional[str] = None,
-        max_multicall: t.Optional[int] = multicall_default_batch,
+        max_multicall: t.Optional[int] = None,
     ) -> None:
         self.w3 = w3
         self.chain_id = w3.eth.chainId
@@ -46,7 +46,7 @@ class Lido:
             lido_address or get_default_lido_address(self.chain_id)
         self.lido_abi_path = \
             lido_abi_path or get_default_lido_abi_path(self.chain_name)
-        self.max_multicall = max_multicall
+        self.max_multicall = max_multicall or multicall_default_batch
 
     def get_operators_data(self):
         return get_operators_data(
