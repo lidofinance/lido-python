@@ -88,7 +88,7 @@ class Lido:
         return find_duplicates(operators_with_validated_keys)
 
     @staticmethod
-    def spot_duplicates(operators, key, original_op):
+    def spot_duplicates(operators, key, original_op = None):
         return spot_duplicates(operators, key, original_op)
 
     @staticmethod
