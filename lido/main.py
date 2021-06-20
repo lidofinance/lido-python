@@ -127,8 +127,8 @@ class Lido:
 
         return get_stats(
             self.w3,
-            lido_address=self.lido_address,
-            lido_abi_path=self.lido_abi_path,
+            contract_address=self.lido_address,
+            contract_abi_path=self.lido_abi_path,
             funcs_to_fetch=funcs_to_fetch)
 
     def lido_self_check(self):

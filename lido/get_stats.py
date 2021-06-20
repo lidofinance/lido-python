@@ -7,8 +7,8 @@ from lido.utils.data_actuality import get_data_actuality
 
 def get_stats(
     w3,
-    lido_address: str,
-    lido_abi_path: str,
+    contract_address: str,
+    contract_abi_path: str,
     funcs_to_fetch: t.List[str],
 ) -> t.Dict:
     """Fetch various constants from Lido for analytics and statistics"""
@@ -16,7 +16,7 @@ def get_stats(
     # Getting function data from contract ABI
     funcs_from_contract = [
         x
-        for x in get_contract(w3, address=lido_address, path=lido_abi_path).abi
+        for x in get_contract(w3, address=contract_address, path=contract_abi_path).abi
         if x["type"] == "function" and x["name"] in funcs_to_fetch
     ]
 
@@ -32,7 +32,7 @@ def get_stats(
         [
             Call(
                 w3,
-                lido_address,
+                contract_address,
                 [
                     "%s()(%s)" % (item["name"], item["multicall_outputs"]),
                 ],
