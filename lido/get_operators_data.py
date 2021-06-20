@@ -3,7 +3,7 @@ import logging
 
 from lido.multicall import Call, Multicall
 # from lido.constants.contract_addresses import get_registry_address
-from lido.contracts.w3_contracts import get_nos_contract
+from lido.contracts.w3_contracts import get_contract
 
 logger = logging.getLogger(__name__)
 
@@ -63,7 +63,7 @@ def get_operators_data(
     # Getting function data from contract ABI
     function_abi = next(
         x
-        for x in get_nos_contract(w3, address=registry_address, path=registry_abi_path).abi
+        for x in get_contract(w3, address=registry_address, path=registry_abi_path).abi
         if x["name"] == "getNodeOperator"
     )
 

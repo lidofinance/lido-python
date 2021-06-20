@@ -1,7 +1,7 @@
 import pytest
 
 from lido.main import Lido
-from lido.contracts.abi_loader import load_lido_abi, load_operators_abi
+from lido.contracts.abi_loader import load_contract_abi
 from lido.multicall.constants import MULTICALL_ADDRESSES
 
 from web3.middleware import geth_poa_middleware
@@ -47,7 +47,7 @@ def test_get_operators():
 
     lido_contract = FakeContract(
         lido.registry_address,
-        load_lido_abi(lido.registry_abi_path),
+        load_contract_abi(lido.registry_abi_path),
         web3.eth)
     lido_contract.add_contract_method(
         "getNodeOperatorsCount()(uint256)",
@@ -92,7 +92,7 @@ def test_get_operators_keys():
     lido = Lido(web3)
     lido_contract = FakeContract(
         lido.registry_address,
-        load_lido_abi(lido.registry_abi_path),
+        load_contract_abi(lido.registry_abi_path),
         web3.eth)
     lido_contract.add_contract_method(
         "getSigningKey(uint256,uint256)(bytes,bytes,bool)",
@@ -118,7 +118,7 @@ def test_validate_valid_keys_goerly():
     lido = Lido(web3)
     lido_contract = FakeContract(
         lido.lido_address,
-        load_lido_abi(lido.lido_abi_path),
+        load_contract_abi(lido.lido_abi_path),
         web3.eth)
     lido_contract.add_contract_method(
         "getWithdrawalCredentials()(bytes32)",
@@ -142,7 +142,7 @@ def test_validate_valid_keys_mainnet():
     lido = Lido(web3)
     lido_contract = FakeContract(
         lido.lido_address,
-        load_lido_abi(lido.lido_abi_path),
+        load_contract_abi(lido.lido_abi_path),
         web3.eth)
     lido_contract.add_contract_method(
         "getWithdrawalCredentials()(bytes32)",
@@ -166,7 +166,7 @@ def test_validate_invalid_keys():
     lido = Lido(web3)
     lido_contract = FakeContract(
         lido.lido_address,
-        load_lido_abi(lido.lido_abi_path),
+        load_contract_abi(lido.lido_abi_path),
         web3.eth)
     lido_contract.add_contract_method(
         "getWithdrawalCredentials()(bytes32)",
@@ -190,7 +190,7 @@ def test_validate_keys_list():
     lido = Lido(web3)
     lido_contract = FakeContract(
         lido.lido_address,
-        load_lido_abi(lido.lido_abi_path),
+        load_contract_abi(lido.lido_abi_path),
         web3.eth)
     lido_contract.add_contract_method(
         "getWithdrawalCredentials()(bytes32)",
@@ -211,7 +211,7 @@ def test_different_validate_keys_methods():
     lido = Lido(web3)
     lido_contract = FakeContract(
         lido.lido_address,
-        load_lido_abi(lido.lido_abi_path),
+        load_contract_abi(lido.lido_abi_path),
         web3.eth)
     lido_contract.add_contract_method(
         "getWithdrawalCredentials()(bytes32)",
@@ -341,7 +341,7 @@ def test_get_stats():
     lido = Lido(web3)
     lido_contract = FakeContract(
         lido.lido_address,
-        load_lido_abi(lido.lido_abi_path),
+        load_contract_abi(lido.lido_abi_path),
         web3.eth)
     lido_contract.add_contract_method("isStopped()(bool)", fake_isStopped)
     lido_contract.add_contract_method("getTotalPooledEther()(uint256)", fake_getTotalPooledEther)

@@ -2,7 +2,7 @@ import typing as t
 import logging
 
 from lido.multicall import Call, Multicall
-from lido.contracts.w3_contracts import get_nos_contract
+from lido.contracts.w3_contracts import get_contract
 
 logger = logging.getLogger(__name__)
 
@@ -66,7 +66,7 @@ def get_operators_keys(
 
         function_abi = next(
             x
-            for x in get_nos_contract(w3, address=registry_address, path=registry_abi_path).abi
+            for x in get_contract(w3, address=registry_address, path=registry_abi_path).abi
             if x["name"] == "getSigningKey"
         )
         signing_keys_keys = ["index"] + [x["name"] for x in function_abi["outputs"]]

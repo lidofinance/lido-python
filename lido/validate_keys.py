@@ -8,7 +8,7 @@ from lido.eth2deposit.utils.ssz import (
 )
 from lido.eth2deposit.settings import get_chain_setting
 from lido.constants.chains import get_eth2_chain_name
-from lido.contracts.w3_contracts import get_lido_contract
+from lido.contracts.w3_contracts import get_contract
 
 import concurrent
 
@@ -62,7 +62,7 @@ def validate_keys_mono(
     """
 
     # Prepare network vars
-    lido = get_lido_contract(w3, address=lido_address, path=lido_abi_path)
+    lido = get_contract(w3, address=lido_address, path=lido_abi_path)
     withdrawal_credentials = bytes(lido.functions.getWithdrawalCredentials().call())
     chain_id = w3.eth.chainId
 
@@ -94,7 +94,7 @@ def validate_keys_multi(
     """
 
     # Prepare network vars
-    lido = get_lido_contract(w3, address=lido_address, path=lido_abi_path)
+    lido = get_contract(w3, address=lido_address, path=lido_abi_path)
     withdrawal_credentials = bytes(lido.functions.getWithdrawalCredentials().call())
     chain_id = w3.eth.chainId
 
@@ -132,7 +132,7 @@ def validate_key_list_multi(
     """
 
     # Prepare network
-    lido = get_lido_contract(w3, address=lido_address, path=lido_abi_path)
+    lido = get_contract(w3, address=lido_address, path=lido_abi_path)
     withdrawal_credentials = bytes(lido.functions.getWithdrawalCredentials().call())
     chain_id = w3.eth.chainId
 

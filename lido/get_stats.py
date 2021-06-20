@@ -1,8 +1,7 @@
 import typing as t
 
 from lido.multicall import Call, Multicall
-from lido.constants.contract_addresses import get_default_lido_address
-from lido.contracts.w3_contracts import get_lido_contract
+from lido.contracts.w3_contracts import get_contract
 from lido.utils.data_actuality import get_data_actuality
 
 
@@ -17,7 +16,7 @@ def get_stats(
     # Getting function data from contract ABI
     funcs_from_contract = [
         x
-        for x in get_lido_contract(w3, address=lido_address, path=lido_abi_path).abi
+        for x in get_contract(w3, address=lido_address, path=lido_abi_path).abi
         if x["type"] == "function" and x["name"] in funcs_to_fetch
     ]
 
