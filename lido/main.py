@@ -93,6 +93,14 @@ class Lido:
 
     @staticmethod
     def validate_key(chain_id, key, withdrawal_credentials):
+        """
+        WARNING:
+        This is a lower-level validation function without checks for correct
+        chain_id and withdrawal_credentials for a Lido deployment. 
+        This is required for correct multiprocess operation.
+        For most use-cases don't use it directly, use validate_keys_multi or
+        validate_key_list_multi instead.
+        """
         return validate_key(
                 {
                     "chain_id": chain_id, 
