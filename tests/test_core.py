@@ -72,7 +72,7 @@ def test_get_operators():
 
 
 def test_get_operators_keys():
-    operators = load_test_data_from_file("operators_with_valid_keys_goerly.txt")
+    operators = load_test_data_from_file("operators_with_valid_keys_goerli.txt")
 
     def fake_getSigningKey(eth, data):
         op_id = data[0]
@@ -108,8 +108,8 @@ def test_get_operators_keys():
     assert operators == operators_with_keys
 
 
-def test_validate_valid_keys_goerly():
-    operators = load_test_data_from_file("operators_with_valid_keys_goerly.txt")
+def test_validate_valid_keys_goerli():
+    operators = load_test_data_from_file("operators_with_valid_keys_goerli.txt")
 
     web3 = FakeWeb3()
     web3.eth.chainId = 5
@@ -180,7 +180,7 @@ def test_validate_invalid_keys():
             assert key["valid_signature"] == False
 
 def test_validate_keys_list():
-    operators = load_test_data_from_file("operators_with_mixed_keys_goerly.txt")
+    operators = load_test_data_from_file("operators_with_mixed_keys_goerli.txt")
     keys = operators[0]['keys']
 
     web3 = FakeWeb3()
@@ -202,7 +202,7 @@ def test_validate_keys_list():
     assert invalid_keys == [keys[2]]
 
 def test_different_validate_keys_methods():
-    operators = load_test_data_from_file("operators_with_mixed_keys_goerly.txt")
+    operators = load_test_data_from_file("operators_with_mixed_keys_goerli.txt")
 
     web3 = FakeWeb3()
     web3.eth.chainId = 5
@@ -228,7 +228,7 @@ def test_different_validate_keys_methods():
 
 
 def test_validate_key():
-    operators = load_test_data_from_file("operators_with_valid_keys_goerly.txt")
+    operators = load_test_data_from_file("operators_with_valid_keys_goerli.txt")
 
     should_be_true = Lido.validate_key(
         5,
@@ -247,7 +247,7 @@ def test_validate_key():
 
 
 def test_find_duplicates():
-    operators = load_test_data_from_file("operators_with_duplicated_keys_goerly.txt")
+    operators = load_test_data_from_file("operators_with_duplicated_keys_goerli.txt")
 
     operators_with_checked_duplicates = Lido.find_duplicates(operators)
 
@@ -263,7 +263,7 @@ def test_find_duplicates():
 
 
 def test_spot_duplicates():
-    operators = load_test_data_from_file("operators_with_duplicated_keys_goerly.txt")
+    operators = load_test_data_from_file("operators_with_duplicated_keys_goerli.txt")
 
     duplicates = Lido.spot_duplicates(
         operators,
@@ -276,11 +276,11 @@ def test_spot_duplicates():
 
 
 def test_poa_middleware_check():
-    web3_goerly = FakeWeb3()
-    web3_goerly.eth.chainId = 5
-    web3_goerly.middleware_onion = []
+    web3_goerli = FakeWeb3()
+    web3_goerli.eth.chainId = 5
+    web3_goerli.middleware_onion = []
     try:
-        Lido(web3_goerly)
+        Lido(web3_goerli)
         assert False, "No exception while PoA middleware is not injected"
     except(ValueError):
         pass
