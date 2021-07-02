@@ -39,7 +39,8 @@ Depending on which network is configured in web3 object, a set of contracts will
 - lido.get_operators_keys(operator_data) -> operator_data - fetches and adds keys to operator_data
 - lido.validate_keys_mono(operator_data) -> operator_data - validates keys in single process and adds validation results to operator_data
 - lido.validate_keys_multi(operator_data) -> operator_data - validates keys in multiple processes and adds validation results to operator_data, requires a main function (see example)
-- lido.validate_key([[key,depositSignature]]) -> Boolean - low-level validation function
+- lido.validate_key(chain_id, key, withdrawal_credentials) -> Boolean - low-level validation function, doesn't check for correct
+  chain_id and withdrawal_credentials for a Lido deployment. For most use-cases use validate_keys_multi or validate_key_list_multi instead
 - lido.find_duplicates(operator_data) -> operator_data - finds duplicate keys and adds results to operator_data
 
 - lido.fetch_and_validate() -> operator_data - combines fetching operator data and running all validations on it - useful when you would be running all validations on data anyway
