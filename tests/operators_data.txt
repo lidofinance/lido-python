@@ -1,0 +1,42 @@
+[
+    {
+        'id': 0, 
+        'active': True, 
+        'name': 'Alex T', 
+        'rewardAddress': '0x1c292814671b60a56c4051caf6e6c5fd583f2ce5', 
+        'stakingLimit': 3, 
+        'stoppedValidators': 0, 
+        'totalSigningKeys': 3, 
+        'usedSigningKeys': 3
+    }, 
+    {
+        'id': 1, 
+        'active': True, 
+        'name': 'KRogLA', 
+        'rewardAddress': '0xa988c92aeaa098c0cf00312efc461f5b0b2f9fc9', 
+        'stakingLimit': 3, 
+        'stoppedValidators': 0, 
+        'totalSigningKeys': 3, 
+        'usedSigningKeys': 3
+    }, 
+    {
+        'id': 2, 
+        'active': True, 
+        'name': 'Nikolay', 
+        'rewardAddress': '0xec2d2e81721a477798e938924266f92c4e5fc54e', 
+        'stakingLimit': 3,
+        'stoppedValidators': 0,
+        'totalSigningKeys': 3,
+        'usedSigningKeys': 3
+    }, 
+    {
+        'id': 3,
+        'active': True,
+        'name': 'Denis',
+        'rewardAddress': '0x31a0775133d38ef0d2979823f30811888097442d',
+        'stakingLimit': 3,
+        'stoppedValidators': 0,
+        'totalSigningKeys': 3,
+        'usedSigningKeys': 3
+    }
+]
