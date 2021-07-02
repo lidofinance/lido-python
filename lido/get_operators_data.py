@@ -2,7 +2,6 @@ import typing as t
 import logging
 
 from lido.multicall import Call, Multicall
-# from lido.constants.contract_addresses import get_registry_address
 from lido.contracts.w3_contracts import get_contract
 
 logger = logging.getLogger(__name__)
