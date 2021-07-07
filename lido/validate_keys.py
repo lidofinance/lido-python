@@ -63,7 +63,7 @@ def validate_keys_mono(
 
     # Prepare network vars
     lido = get_contract(w3, address=lido_address, path=lido_abi_path)
-    withdrawal_credentials = bytes(lido.functions.getWithdrawalCredentials().call())
+    withdrawal_credentials = lido.functions.getWithdrawalCredentials().call()
     chain_id = w3.eth.chainId
 
     for op_i, op in enumerate(operators):
@@ -95,7 +95,7 @@ def validate_keys_multi(
 
     # Prepare network vars
     lido = get_contract(w3, address=lido_address, path=lido_abi_path)
-    withdrawal_credentials = bytes(lido.functions.getWithdrawalCredentials().call())
+    withdrawal_credentials = lido.functions.getWithdrawalCredentials().call()
     chain_id = w3.eth.chainId
 
     with concurrent.futures.ProcessPoolExecutor() as executor:
@@ -130,7 +130,7 @@ def validate_key_list_multi(
 
     # Prepare network
     lido = get_contract(w3, address=lido_address, path=lido_abi_path)
-    withdrawal_credentials = bytes(lido.functions.getWithdrawalCredentials().call())
+    withdrawal_credentials = lido.functions.getWithdrawalCredentials().call()
     chain_id = w3.eth.chainId
 
     invalid = []
