@@ -39,7 +39,7 @@ def get_stats(
                 [[item["name"], None]],
             )
             for item in funcs_from_contract
-        ]
+        ],
     )()
 
     # Return values instead of single-element tuples

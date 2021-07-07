@@ -27,15 +27,12 @@ def get_operators_data(
     }...]
     """
 
-    operators_n = Call(
-        w3,
-        registry_address,
-        "getNodeOperatorsCount()(uint256)")()
-    logger.debug(f'{operators_n=}')
+    operators_n = Call(w3, registry_address, "getNodeOperatorsCount()(uint256)")()
+    logger.debug(f"{operators_n=}")
     if operators_n == 0:
-        logger.warning(f'no operators')  # fixme assert if not test env
+        logger.warning(f"no operators")  # fixme assert if not test env
         return []
-    assert operators_n < 1_000_000, 'too big operators_n'
+    assert operators_n < 1_000_000, "too big operators_n"
 
     calls = Multicall(
         w3,
@@ -51,7 +48,7 @@ def get_operators_data(
                 [[i, None]],
             )
             for i in range(operators_n)
-        ]
+        ],
     )()
 
     calls_list = list(calls.values())

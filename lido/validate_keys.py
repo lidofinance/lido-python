@@ -72,9 +72,9 @@ def validate_keys_mono(
             if "valid_signature" not in key.keys():
                 operators[op_i]["keys"][key_i]["valid_signature"] = validate_key(
                     {
-                        "chain_id": chain_id, 
-                        "key": key, 
-                        "withdrawal_credentials": withdrawal_credentials
+                        "chain_id": chain_id,
+                        "key": key,
+                        "withdrawal_credentials": withdrawal_credentials,
                     }
                 )
 
@@ -103,11 +103,8 @@ def validate_keys_multi(
 
             # Pass {key,withdrawal_credentials} to overcome 1-arg limit of concurrency.map()
             arguments = [
-                {
-                    "chain_id": chain_id, 
-                    "key": key, 
-                    "withdrawal_credentials": withdrawal_credentials
-                } for key in op["keys"]
+                {"chain_id": chain_id, "key": key, "withdrawal_credentials": withdrawal_credentials}
+                for key in op["keys"]
             ]
 
             validate_key_results = executor.map(validate_key, arguments)
@@ -142,11 +139,8 @@ def validate_key_list_multi(
 
         # Pass {key,withdrawal_credentials} to overcome 1-arg limit of concurrency.map()
         arguments = [
-            {
-                "chain_id": chain_id, 
-                "key": key, 
-                "withdrawal_credentials": withdrawal_credentials
-            } for key in input
+            {"chain_id": chain_id, "key": key, "withdrawal_credentials": withdrawal_credentials}
+            for key in input
         ]
 
         validate_key_results = executor.map(validate_key, arguments)
