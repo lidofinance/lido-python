@@ -1,7 +1,3 @@
-import typing as t
-
-import os
-
 from lido.constants.chains import chains
 
 LIDO_ADDRESSES = {

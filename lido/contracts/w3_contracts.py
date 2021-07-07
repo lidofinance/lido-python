@@ -1,5 +1,3 @@
-import typing as t
-
 from lido.contracts.abi_loader import load_contract_abi
 
 
