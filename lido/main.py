@@ -59,19 +59,19 @@ class Lido:
             self.max_multicall,
         )
 
-    def validate_keys_multi(self, operators_with_keys):
+    def validate_keys_multi(self, operators_with_keys, strict=False):
         return validate_keys_multi(
-            self.w3, operators_with_keys, self.lido_address, self.lido_abi_path
+            self.w3, operators_with_keys, self.lido_address, self.lido_abi_path, strict
         )
 
-    def validate_keys_mono(self, operators_with_keys):
+    def validate_keys_mono(self, operators_with_keys, strict=False):
         return validate_keys_mono(
-            self.w3, operators_with_keys, self.lido_address, self.lido_abi_path
+            self.w3, operators_with_keys, self.lido_address, self.lido_abi_path, strict
         )
 
-    def validate_key_list_multi(self, operators_with_keys):
+    def validate_key_list_multi(self, operators_with_keys, strict=False):
         return validate_key_list_multi(
-            self.w3, operators_with_keys, self.lido_address, self.lido_abi_path
+            self.w3, operators_with_keys, self.lido_address, self.lido_abi_path, strict
         )
 
     @staticmethod

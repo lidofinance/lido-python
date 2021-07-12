@@ -37,8 +37,8 @@ Depending on which network is configured in web3 object, a set of contracts will
 - lido.get_operators_data() -> operator_data - load node operator data
 
 - lido.get_operators_keys(operator_data) -> operator_data - fetches and adds keys to operator_data
-- lido.validate_keys_mono(operator_data) -> operator_data - validates keys in single process and adds validation results to operator_data
-- lido.validate_keys_multi(operator_data) -> operator_data - validates keys in multiple processes and adds validation results to operator_data, requires a main function (see example)
+- lido.validate_keys_mono(operator_data, strict = False) -> operator_data - validates keys in single process and adds validation results to operator_data
+- lido.validate_keys_multi(operator_data, strict = False) -> operator_data - validates keys in multiple processes and adds validation results to operator_data, requires a main function (see example)
 - lido.validate_key(chain_id, key, withdrawal_credentials) -> Boolean - low-level validation function, doesn't check for correct
   chain_id and withdrawal_credentials for a Lido deployment. For most use-cases use validate_keys_multi or validate_key_list_multi instead
 - lido.find_duplicates(operator_data) -> operator_data - finds duplicate keys and adds results to operator_data
@@ -52,6 +52,8 @@ You can mix and match these functions, but make sure to use get_operators_data()
 ## Notes
 
 1. Signature validation will be skipped if its results are already present in operator_data. This way you can safely load validation results from cache and add `["valid_signature"] = Boolean` to already checked keys.
+
+2. Signature validation functions are accounting for previous withdrawal credentials by default. However, if you are building a fresh key validator it is vitally important to enable strict mode by setting strict argument of the functions to `True`. This way new keys with old withdrawal credentials won't pass validation.
 
 ## Running an example script
 
