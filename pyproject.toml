@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lido"
-version = "1.0.0"
+version = "1.1.0"
 description = "Network helpers for Lido"
 authors = ["Lido <info@lido.fi>"]
 license = "MIT"
@@ -19,7 +19,7 @@ requests = "^2.25.1"
 bumpversion = "^0.6.0"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=1.1.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.black]
