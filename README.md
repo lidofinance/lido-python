@@ -1,7 +1,7 @@
 # Deprecation Notice:
 
-This SDK is deprecated in favor of the new [lido-python-sdk](https://github.com/lidofinance/lido-python) lib. 
-The new library uses [blst](https://github.com/supranational/blst), which greatly speeds up the verification.
+This SDK is deprecated in favor of the new [lido-python-sdk](https://github.com/lidofinance/lido-python-sdk) lib. 
+The new library uses [blst](https://github.com/supranational/blst), which greatly speeds up key verification.
 
 ## Lido
 
